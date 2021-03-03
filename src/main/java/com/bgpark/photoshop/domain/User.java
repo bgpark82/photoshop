@@ -46,7 +46,7 @@ public class User {
     @CollectionTable(name = "HOME_ADDRESS_HISTORY", joinColumns = @JoinColumn(name = "USER_ID"))
     private List<Address> homeAddressHistory = new ArrayList<>();
 
-    public void updateHomeAddress(final String city, final String street, final String detail, final int zipcode) {
+    public void updateHomeAddress(String city, String street, String detail, int zipcode) {
         final Address homeAddress = Address.builder()
                 .city(city)
                 .street(street)

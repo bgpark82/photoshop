@@ -1,5 +1,7 @@
-package com.bgpark.photoshop.domain;
+package com.bgpark.photoshop.repository;
 
+import com.bgpark.photoshop.domain.Address;
+import com.bgpark.photoshop.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
-class UserTest {
+class UserRepositoryTest {
 
     @Autowired
     private EntityManager em;
