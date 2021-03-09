@@ -1,5 +1,6 @@
-package com.bgpark.photoshop.domain;
+package com.bgpark.photoshop.domain.item;
 
+import com.bgpark.photoshop.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorColumn(name = "DTYPE")
 @ToString(callSuper = true)
-public abstract class Item extends BaseEntity{
+public abstract class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
