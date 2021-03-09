@@ -28,6 +28,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.1"  // 쿼리의 실제 파라미터 보여주기
     implementation group: 'com.google.guava', name: 'guava', version: 'r05'
+    testImplementation 'io.rest-assured:rest-assured:3.3.0'
+    implementation 'org.jgrapht:jgrapht-core:1.0.1'
 }
 
 test {

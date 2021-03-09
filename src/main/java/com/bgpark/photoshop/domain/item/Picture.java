@@ -1,6 +1,5 @@
 package com.bgpark.photoshop.domain.item;
 
-import com.bgpark.photoshop.domain.item.Item;
 import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
@@ -17,10 +16,16 @@ public class Picture extends Item {
 
     private String imageUrl;
 
+    public Picture(String artist, String imageUrl) {
+        this.artist = artist;
+        this.imageUrl = imageUrl;
+    }
+
     @Builder
-    public Picture(String name, int price, String artist) {
+    public Picture(String name, int price, String artist, String imageUrl) {
         super(name, price);
         this.artist = artist;
+        this.imageUrl = imageUrl;
     }
 }
 
