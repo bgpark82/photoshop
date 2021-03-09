@@ -1,9 +1,11 @@
 package com.bgpark.photoshop.repository;
 
+import com.bgpark.photoshop.config.JpaConfig;
 import com.bgpark.photoshop.domain.item.Picture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.persistence.EntityManager;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
+@MockBean(JpaConfig.class) // 설정을 Mock으로 추가할 수 있었다
 class PictureRepositoryTest {
 
     @Autowired
@@ -56,7 +59,6 @@ class PictureRepositoryTest {
                 .name("설원")
                 .price(13000)
                 .build();
-
         em.persist(picture);
 
         em.flush();

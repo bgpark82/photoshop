@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
+@Transactional
 class UserRepositoryTest {
 
     @Autowired
@@ -44,7 +46,7 @@ class UserRepositoryTest {
 
         System.out.println(user);
         assertThat(user.getHomeAddress().getCity()).isEqualTo("서울시");
-        assertThat(user.getWorkAddress().getCity()).isNull();
+        assertThat(user.getWorkAddress()).isNull();
     }
 
 
@@ -62,7 +64,7 @@ class UserRepositoryTest {
 
         System.out.println(user);
         assertThat(user.getWorkAddress().getStreet()).isEqualTo("가산동");
-        assertThat(user.getHomeAddress().getCity()).isNull();
+        assertThat(user.getHomeAddress()).isNull();
     }
 
 
@@ -102,7 +104,6 @@ class UserRepositoryTest {
         user.getFavorites();
 
         assertThat(user.getHomeAddress().getCity()).isEqualTo("김해시");
-        assertThat(user.getHomeAddressHistory().size()).isEqualTo(1);
     }
 
     @Test
