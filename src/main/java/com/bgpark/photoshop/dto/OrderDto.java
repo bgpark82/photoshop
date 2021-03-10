@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.dto;
 
+import com.bgpark.photoshop.domain.Delivery;
 import com.bgpark.photoshop.domain.Orders;
 import com.bgpark.photoshop.domain.User;
 import com.bgpark.photoshop.domain.item.Picture;
@@ -33,6 +34,7 @@ public class OrderDto {
         private Long id;
         private UserDto.Res user;
         private List<PictureDto.Res> pictures;
+        private DeliveryDto.Res delivery;
 
         public static Res of(Orders order){
             List<PictureDto.Res> pictures = order.getItems().stream()
@@ -41,10 +43,13 @@ public class OrderDto {
 
             UserDto.Res user = UserDto.Res.of(order.getUser());
 
+            DeliveryDto.Res delivery = DeliveryDto.Res.of(order.getDelivery());
+
             return Res.builder()
                     .id(order.getId())
                     .pictures(pictures)
                     .user(user)
+                    .delivery(delivery)
                     .build();
         }
     }

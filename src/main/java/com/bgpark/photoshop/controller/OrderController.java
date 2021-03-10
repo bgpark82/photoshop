@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.controller;
 
+import com.bgpark.photoshop.domain.Delivery;
 import com.bgpark.photoshop.domain.Orders;
 import com.bgpark.photoshop.domain.User;
 import com.bgpark.photoshop.domain.item.Item;
@@ -33,10 +34,9 @@ public class OrderController {
         User user = userRepository.findById(request.getUserId()).get();
         Item picture = itemRepository.findById(request.getItemId()).get();
 
-        Orders order = Orders.builder()
-                .user(user)
-                .item(picture)
-                .build();
+        Delivery delivery = Delivery.ready(user.getHomeAddress());
+
+        Orders order = Orders.create(user, delivery, picture);
 
         orderRepository.save(order);
 
