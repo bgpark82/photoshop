@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -17,9 +19,11 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/user")
-    public ResponseEntity<User> save(@RequestBody UserDto.SaveReq request) {
-        User user = request.toEntity();
-        return ResponseEntity.ok(userService.save(user));
+    @PostMapping("/users")
+    public ResponseEntity<UserDto.Res> save(@RequestBody UserDto.Req request) {
+        UserDto.Res response = userService.save(request);
+        return ResponseEntity
+                .created(URI.create(String.format("/user/%d",response.getId())))
+                .body(response);
     }
 }

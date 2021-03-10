@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.controller;
+package com.bgpark.photoshop.acceptance;
 
 import com.bgpark.photoshop.AcceptanceTest;
 import com.bgpark.photoshop.domain.item.Picture;

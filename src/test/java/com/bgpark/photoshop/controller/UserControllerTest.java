@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.controller;
 
+import com.bgpark.photoshop.domain.Address;
 import com.bgpark.photoshop.dto.AddressDto;
 import com.bgpark.photoshop.dto.UserDto;
 import com.bgpark.photoshop.service.UserService;
@@ -13,8 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.HashSet;
+import java.util.Set;
 
+import static com.bgpark.photoshop.step.UserStep.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,28 +35,25 @@ class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    AddressDto.SaveReq 사용자_집주소;
+    AddressDto.SaveReq 사용자_회사주소;
+    Set<String> 사용자_관심분야;
+    String 이름;
+
     @BeforeEach
     void setUp() {
+
         MockitoAnnotations.initMocks(this);
+        이름 = "박병길";
+        사용자_집주소 = 사용자_집주소("서울", "가산동", "롯데백화점", 2468);
+        사용자_회사주소 = 사용자_회사주소("서울", "가산동", "롯데백화점", 2468);
+        사용자_관심분야 = 사용자_관심분야("portrait", "landscape");
     }
 
     @Test
     void 회원가입() throws Exception {
-        String name = "박병길";
-        AddressDto.SaveReq homeAddressReq = createHomeAddressRequestMock();
-        AddressDto.SaveReq workAddressReq = createWorkAddressRequestMock();
-        HashSet<String> favoritesReq = createFavoritesMock();
-        UserDto.SaveReq userReq = UserDto.SaveReq
-                .builder()
-                .homeAddress(homeAddressReq)
-                .workAddress(workAddressReq)
-                .favorites(favoritesReq)
-                .name(name)
-                .build();
-
+        UserDto.Req userReq = 사용자(이름, 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
         String request = mapper.writeValueAsString(userReq);
-
-        given(userService.save(any())).willReturn(userReq.toEntity());
 
         mvc.perform(post("/api/v1/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,30 +63,5 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.name").value("박병길"));
     }
 
-    private HashSet<String> createFavoritesMock() {
-        HashSet<String> favoritesReq = new HashSet<>();
-        favoritesReq.add("portrait");
-        favoritesReq.add("landscape");
-        return favoritesReq;
-    }
 
-    private AddressDto.SaveReq createWorkAddressRequestMock() {
-        return AddressDto.SaveReq
-                .builder()
-                .city("서울")
-                .street("가산동")
-                .detail("롯데백화점")
-                .zipcode(2468)
-                .build();
-    }
-
-    private AddressDto.SaveReq createHomeAddressRequestMock() {
-        return AddressDto.SaveReq
-                .builder()
-                .city("서울")
-                .street("서초대로")
-                .detail("201")
-                .zipcode(1234)
-                .build();
-    }
 }

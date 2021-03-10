@@ -15,9 +15,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public User save(User user) {
-        userRepository.save(user);
-        return user;
+    public UserDto.Res save(UserDto.Req request) {
+        User user = userRepository.save(request.toEntity());
+        return UserDto.Res.of(user);
     }
-
 }
