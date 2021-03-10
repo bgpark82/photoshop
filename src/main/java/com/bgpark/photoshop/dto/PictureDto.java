@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.dto;
 
+import com.bgpark.photoshop.domain.item.Item;
 import com.bgpark.photoshop.domain.item.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class PictureDto {
         private String imageUrl;
         private int price;
 
-        public Picture toEntity() {
+        public Item toEntity() {
             return Picture.builder()
                     .price(price)
                     .name(name)

@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +28,7 @@ public class DatabaseCleanup implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         tableNames = em.getMetamodel().getEntities().stream()
                 .filter(e -> e.getJavaType().getAnnotation(Entity.class) != null)
-                .filter(e -> e.getSupertype() == null)
+                .filter(e -> e.getJavaType().getAnnotation(DiscriminatorValue.class) == null)
                 .map(e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, e.getName()))
                 .collect(Collectors.toList());
     }

@@ -1,21 +1,19 @@
 package com.bgpark.photoshop.repository;
 
-import com.bgpark.photoshop.domain.item.Picture;
+import com.bgpark.photoshop.domain.Orders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class PictureRepository {
+public class OrderRepository {
 
     private final EntityManager em;
 
-    @Transactional
-    public Picture save(Picture picture){
-        em.persist(picture);
-        return picture;
+    public Orders save(Orders order) {
+        em.persist(order);
+        return order;
     }
 }

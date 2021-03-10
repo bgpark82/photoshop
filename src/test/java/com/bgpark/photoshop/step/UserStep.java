@@ -48,6 +48,10 @@ public class UserStep {
                 .build();
     }
 
+    public static Long 사용자_생성요청되었음(UserDto.Req request) {
+        return 사용자_생성요청(request).as(UserDto.Res.class).getId();
+    }
+
     public static ExtractableResponse<Response> 사용자_생성요청(UserDto.Req request) {
         return RestAssured
                 .given().log().all()

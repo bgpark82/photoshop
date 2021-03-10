@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
 @MockBean(JpaConfig.class) // 설정을 Mock으로 추가할 수 있었다
-class PictureRepositoryTest {
+class ItemRepositoryTest {
 
     @Autowired
     private EntityManager em;
