@@ -26,10 +26,9 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
 
     Long userId, pictureId;
 
-    @Override
     @BeforeEach
-    public void setUp() throws Exception {
-        super.setUp();
+    void setUp() throws Exception {
+        super.beforeEach();
         Set<String> 관심분야 = 사용자_관심분야("landscape", "portrait");
         AddressDto.SaveReq 집주소 = 사용자_집주소("서울", "서초구", "201", 12345);
         AddressDto.SaveReq 회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);

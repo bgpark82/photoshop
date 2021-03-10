@@ -23,8 +23,8 @@ public class UserAcceptanceTest extends AcceptanceTest {
     String 이름;
 
     @BeforeEach
-    public void setUp() throws Exception {
-        super.setUp();
+    void setUp() throws Exception {
+        super.beforeEach();
         이름 = "박병길";
         사용자_집주소 = 사용자_집주소("서울", "가산동", "롯데백화점", 2468);
         사용자_회사주소 = 사용자_회사주소("서울", "가산동", "롯데백화점", 2468);

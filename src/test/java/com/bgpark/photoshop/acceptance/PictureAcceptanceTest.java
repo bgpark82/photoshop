@@ -15,10 +15,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("사진 관련 인수테스트")
 class PictureAcceptanceTest extends AcceptanceTest {
 
-    @Override
     @BeforeEach
-    public void setUp() throws Exception {
-        super.setUp();
+    void setUp() throws Exception {
+        super.beforeEach();
     }
 
     @DisplayName("사진을 저장한다")
