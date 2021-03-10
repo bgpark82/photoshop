@@ -4,12 +4,14 @@ import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DiscriminatorValue("P")
 @ToString(callSuper = true)
+@Table(name = "PICTURE")
 public class Picture extends Item {
 
     private String artist;

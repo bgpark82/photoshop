@@ -3,6 +3,7 @@ package com.bgpark.photoshop.util;
 import com.google.common.base.CaseFormat;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Entity;
@@ -12,8 +13,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@Profile("test")
+@Component
 public class DatabaseCleanup implements InitializingBean {
 
     @PersistenceContext
@@ -29,6 +29,7 @@ public class DatabaseCleanup implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         tableNames = em.getMetamodel().getEntities().stream()
                 .filter(e -> e.getJavaType().getAnnotation(Entity.class) != null)
+                .filter(e -> e.getSupertype() == null)
                 .map(e -> CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, e.getName()))
                 .collect(Collectors.toList());
     }
