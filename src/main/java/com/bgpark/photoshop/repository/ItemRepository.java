@@ -14,13 +14,13 @@ public class ItemRepository {
 
     private final EntityManager em;
 
-    public Picture save(Item item){
+    public Item save(Item item){
         em.persist(item);
-        return (Picture) item;
+        return item;
     }
 
-    public Optional<Picture> findById(Long id){
-        Picture picture = em.find(Picture.class, id);
-        return Optional.of(picture);
+    public Optional<Item> findById(Long id){
+        Item item = em.find(Picture.class, id);
+        return Optional.of(item);
     }
 }

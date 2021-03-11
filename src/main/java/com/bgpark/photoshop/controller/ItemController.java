@@ -24,8 +24,8 @@ public class ItemController {
     @PostMapping("/pictures")
     @Transactional
     public ResponseEntity<PictureDto.Res> save(@RequestBody PictureDto.Req request) {
-        Picture picture = itemRepository.save(request.toEntity());
-        PictureDto.Res response = PictureDto.Res.of(picture);
+        Item picture = itemRepository.save(request.toEntity());
+        PictureDto.Res response = PictureDto.Res.of((Picture) picture);
         return ResponseEntity
                 .created(URI.create("/pictures/" + picture.getId()))
                 .body(response);

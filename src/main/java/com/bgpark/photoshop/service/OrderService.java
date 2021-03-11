@@ -1,6 +1,7 @@
 package com.bgpark.photoshop.service;
 
 import com.bgpark.photoshop.domain.Delivery;
+import com.bgpark.photoshop.domain.OrderItem;
 import com.bgpark.photoshop.domain.Orders;
 import com.bgpark.photoshop.domain.User;
 import com.bgpark.photoshop.domain.item.Item;
@@ -23,16 +24,19 @@ public class OrderService {
     public OrderDto.Res save(OrderDto.Req request) {
 
         User user = findUserById(request);
-        Item picture = findItemById(request);
+        Item item = findItemById(request);
+
+        OrderItem orderItem = OrderItem.create(item, request.getCount());
         Delivery delivery = Delivery.ready(user.getHomeAddress());
-        Orders order = Orders.create(user, delivery, picture);
+
+        Orders order = Orders.create(user, delivery, orderItem);
 
         orderRepository.save(order);
 
         return OrderDto.Res.of(order);
     }
 
-    private Picture findItemById(OrderDto.Req request) {
+    private Item findItemById(OrderDto.Req request) {
         return itemRepository.findById(request.getItemId()).get();
     }
 

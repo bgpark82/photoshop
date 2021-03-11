@@ -1,6 +1,5 @@
 package com.bgpark.photoshop.domain;
 
-import com.bgpark.photoshop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,36 +21,36 @@ public class Orders {
     @ManyToOne
     private User user;
 
-    @OneToMany
-    private List<Item> items = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Delivery delivery;
 
-    private Orders(User user, Delivery delivery, Item... items) {
-        addItems(items);
-        startDelivery(delivery);
-        this.user = user;
+    private void addOrderItems(OrderItem... orderItems) {
+        Arrays.stream(orderItems).forEach(this::addOrderItem);
     }
 
-    private void addItems(Item... items) {
-        Arrays.stream(items)
-                .forEach(item -> addItem(item));
+    private void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.addOrder(this);
     }
 
-    public void addItem(Item item) {
-        items.add(item);
-        item.addOrder(this);
-    }
-
-    public void startDelivery(Delivery delivery) {
+    private void startDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.addOrder(this);
     }
 
-    public static Orders create(User user, Delivery delivery, Item... items) {
-        return new Orders(user, delivery, items);
+    private void addUser(User user) {
+        this.user = user;
     }
 
-
+    public static Orders create(User user, Delivery delivery, OrderItem... orderItems) {
+        // 기본 생성자를 이용하여 private set 메소드를 만드는 것이 생성자를 더럽히는(?) 것보다 나을듯하다
+        Orders order = new Orders();
+        order.addOrderItems(orderItems);
+        order.startDelivery(delivery);
+        order.addUser(user);
+        return order;
+    }
 }

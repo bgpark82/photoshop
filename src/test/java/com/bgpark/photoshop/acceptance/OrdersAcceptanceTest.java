@@ -54,7 +54,7 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.body().as(OrderDto.Res.class).getUser().getId()).isEqualTo(userId);
-        assertThat(response.body().as(OrderDto.Res.class).getPictures().size()).isEqualTo(1);
+        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().size()).isEqualTo(1);
         assertThat(response.body().as(OrderDto.Res.class).getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
     }
 }

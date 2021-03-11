@@ -1,12 +1,12 @@
 package com.bgpark.photoshop.dto;
 
-import com.bgpark.photoshop.domain.Delivery;
 import com.bgpark.photoshop.domain.Orders;
-import com.bgpark.photoshop.domain.User;
-import com.bgpark.photoshop.domain.item.Picture;
-import lombok.*;
+import com.bgpark.photoshop.domain.item.Item;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.criteria.Order;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,12 +33,13 @@ public class OrderDto {
     public static class Res {
         private Long id;
         private UserDto.Res user;
-        private List<PictureDto.Res> pictures;
+        private List<OrderItemDto.Res> orderItems;
         private DeliveryDto.Res delivery;
 
-        public static Res of(Orders order){
-            List<PictureDto.Res> pictures = order.getItems().stream()
-                    .map(item -> PictureDto.Res.of((Picture) item))
+        public static Res of(Orders order) {
+            List<OrderItemDto.Res> orderItems = order
+                    .getOrderItems().stream()
+                    .map(OrderItemDto.Res::of)
                     .collect(Collectors.toList());
 
             UserDto.Res user = UserDto.Res.of(order.getUser());
@@ -47,7 +48,7 @@ public class OrderDto {
 
             return Res.builder()
                     .id(order.getId())
-                    .pictures(pictures)
+                    .orderItems(orderItems)
                     .user(user)
                     .delivery(delivery)
                     .build();
