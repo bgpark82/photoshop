@@ -1,7 +1,8 @@
 package com.bgpark.photoshop.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -20,7 +21,6 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    @JsonIgnore
     @OneToOne
     private Orders order;
 

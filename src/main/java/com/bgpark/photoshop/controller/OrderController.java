@@ -1,13 +1,7 @@
 package com.bgpark.photoshop.controller;
 
-import com.bgpark.photoshop.domain.Delivery;
-import com.bgpark.photoshop.domain.Orders;
-import com.bgpark.photoshop.domain.User;
-import com.bgpark.photoshop.domain.item.Item;
 import com.bgpark.photoshop.dto.OrderDto;
-import com.bgpark.photoshop.repository.OrderRepository;
-import com.bgpark.photoshop.repository.ItemRepository;
-import com.bgpark.photoshop.repository.UserRepository;
+import com.bgpark.photoshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,24 +17,14 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
+
 
     @PostMapping("/orders")
     @Transactional
     public ResponseEntity save(@RequestBody OrderDto.Req request) {
 
-        User user = userRepository.findById(request.getUserId()).get();
-        Item picture = itemRepository.findById(request.getItemId()).get();
-
-        Delivery delivery = Delivery.ready(user.getHomeAddress());
-
-        Orders order = Orders.create(user, delivery, picture);
-
-        orderRepository.save(order);
-
-        OrderDto.Res response = OrderDto.Res.of(order);
+        OrderDto.Res response = orderService.save(request);
 
         return ResponseEntity
                 .created(URI.create(String.format("/order/%d", response.getId())))

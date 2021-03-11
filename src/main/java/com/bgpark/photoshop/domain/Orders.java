@@ -4,7 +4,6 @@ import com.bgpark.photoshop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ public class Orders {
 
     private Orders(User user, Delivery delivery, Item... items) {
         addItems(items);
-        // this.delivery = delivery;
         startDelivery(delivery);
         this.user = user;
     }
@@ -41,14 +39,14 @@ public class Orders {
                 .forEach(item -> addItem(item));
     }
 
-    public void startDelivery(Delivery delivery) {
-        this.delivery = delivery;
-        delivery.addOrder(this);
-    }
-
     public void addItem(Item item) {
         items.add(item);
         item.addOrder(this);
+    }
+
+    public void startDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.addOrder(this);
     }
 
     public static Orders create(User user, Delivery delivery, Item... items) {
