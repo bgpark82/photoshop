@@ -18,10 +18,11 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    // mappedBy : orderItem의 Order 변수명
+    @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

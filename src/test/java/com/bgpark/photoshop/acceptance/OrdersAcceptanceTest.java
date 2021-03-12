@@ -51,6 +51,24 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         주문_생성_요청됨(response);
     }
 
+    @DisplayName("주문 목록을 조회한다")
+    @Test
+    void getAll() {
+        // given
+        주문_생성_요청_되어있음(OrderDto.Req.of(userId, pictureId1, 10));
+        주문_생성_요청_되어있음(OrderDto.Req.of(userId, pictureId2, 2));
+
+        // when
+        ExtractableResponse<Response> response = RestAssured
+                .given().log().all()
+                .when().get("/api/v1/orders")
+                .then().log().all().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+//        assertThat(response.body().as(new TypeRef<OrderDto.Res>() {}).
+    }
+
     private void 주문_생성_요청됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.body().as(OrderDto.Res.class).getUser().getId()).isEqualTo(userId);

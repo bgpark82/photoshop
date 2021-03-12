@@ -11,8 +11,10 @@ import com.bgpark.photoshop.repository.OrderRepository;
 import com.bgpark.photoshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +39,14 @@ public class OrderService {
         return OrderDto.Res.of(order);
     }
 
+    @Transactional(readOnly = true)
+    public List<OrderDto.Res> findAll() {
+        return orderRepository.findAll()
+                .stream()
+                .map(OrderDto.Res::of)
+                .collect(Collectors.toList());
+    }
+
     private Item findItemById(OrderDto.Req request) {
         return itemRepository.findById(request.getItemId()).get();
     }
@@ -44,4 +54,6 @@ public class OrderService {
     private User findUserById(OrderDto.Req request) {
         return userRepository.findById(request.getUserId()).get();
     }
+
+
 }

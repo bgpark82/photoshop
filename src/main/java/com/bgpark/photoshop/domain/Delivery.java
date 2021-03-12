@@ -21,7 +21,7 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Orders order;
 
     private Delivery(Address address, DeliveryStatus status) {
