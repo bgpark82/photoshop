@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
 import java.net.URI;
 
 @RestController
@@ -21,7 +20,6 @@ public class OrderController {
 
 
     @PostMapping("/orders")
-    @Transactional
     public ResponseEntity save(@RequestBody OrderDto.Req request) {
 
         OrderDto.Res response = orderService.save(request);

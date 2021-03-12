@@ -35,14 +35,15 @@ public class OrderItemDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    static class ItemDto {
+    public static class ItemDto {
         // TODO: 만약 picture를 사용하고 싶다면??
         private Long id;
         private String name;
         private int price;
+        private int stockQuantity;
 
         public static ItemDto of(Item item) {
-            return new ItemDto(item.getId(), item.getName(), item.getPrice());
+            return new ItemDto(item.getId(), item.getName(), item.getPrice(), item.getStockQuantity());
         }
     }
 }

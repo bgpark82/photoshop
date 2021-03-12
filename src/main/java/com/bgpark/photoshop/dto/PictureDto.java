@@ -16,6 +16,7 @@ public class PictureDto {
         private String artist;
         private String imageUrl;
         private int price;
+        private int stockQuantity;
 
         public Item toEntity() {
             return Picture.builder()
@@ -23,6 +24,7 @@ public class PictureDto {
                     .name(name)
                     .imageUrl(imageUrl)
                     .artist(artist)
+                    .stockQuantity(stockQuantity)
                     .build();
         }
     }

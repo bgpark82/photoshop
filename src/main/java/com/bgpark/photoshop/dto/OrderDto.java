@@ -19,10 +19,14 @@ public class OrderDto {
         private Long itemId;
         private int count;
 
-        public Req(Long userId, Long itemId, int count) {
+        private Req(Long userId, Long itemId, int count) {
             this.userId = userId;
             this.itemId = itemId;
             this.count = count;
+        }
+
+        public static Req of(Long userId, Long itemId, int count) {
+            return new Req(userId, itemId, count);
         }
     }
 

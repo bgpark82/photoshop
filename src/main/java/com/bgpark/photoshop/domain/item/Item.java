@@ -24,12 +24,19 @@ public abstract class Item extends BaseEntity {
 
     private int price;
 
-    public Item(String name, int price) {
+    private int stockQuantity;
+
+    public Item(String name, int price, int stockQuantity) {
         this.name = name;
         this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 
-    public int getTotalPrice(int count) {
-        return price * count;
-    };
+    public void ready(int count){
+        final int restStock = stockQuantity - count;
+        if(restStock < 0) {
+            throw new IllegalArgumentException("수량이 부족합니다");
+        }
+        this.stockQuantity = restStock;
+    }
 }

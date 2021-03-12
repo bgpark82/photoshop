@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("주문 관련 인수테스트")
 public class OrdersAcceptanceTest extends AcceptanceTest {
 
-    Long userId, pictureId;
+    Long userId, pictureId1, pictureId2;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -33,7 +33,8 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         AddressDto.SaveReq 회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);
 
         userId = 사용자_생성요청되었음(사용자("박병길", 집주소, 회사주소, 관심분야));
-        pictureId = 사진_저장되어_있음(사진("bgpark", "http://google.com", "random", 1000));
+        pictureId1 = 사진_저장되어_있음(사진("bgpark", "http://naver.com", "random", 1000, 100));
+        pictureId2 = 사진_저장되어_있음(사진("kassie", "http://google.com", "winter", 15000, 10));
     }
 
     /** 주문은 한 종류의 item을 여러개 구입할 수 있다 */
@@ -41,20 +42,35 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
     @Test
     void create() {
         // given
-        OrderDto.Req request = new OrderDto.Req(userId, pictureId, 3);
+        OrderDto.Req request = OrderDto.Req.of(userId, pictureId1, 3);
 
         // when
-        ExtractableResponse<Response> response = RestAssured
+        ExtractableResponse<Response> response = 주문_생성_요청(request);
+
+        // then
+        주문_생성_요청됨(response);
+    }
+
+    private void 주문_생성_요청됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.body().as(OrderDto.Res.class).getUser().getId()).isEqualTo(userId);
+        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().size()).isEqualTo(1);
+        assertThat(response.body().as(OrderDto.Res.class).getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
+        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().get(0).getItem().getStockQuantity()).isEqualTo(97);
+    }
+
+    private ExtractableResponse<Response> 주문_생성_요청(OrderDto.Req request) {
+        return RestAssured
                 .given().log().all()
                 .body(request)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/api/v1/orders")
                 .then().log().all().extract();
-
-        // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.body().as(OrderDto.Res.class).getUser().getId()).isEqualTo(userId);
-        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().size()).isEqualTo(1);
-        assertThat(response.body().as(OrderDto.Res.class).getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
     }
+
+    private Long 주문_생성_요청_되어있음(OrderDto.Req request) {
+        return 주문_생성_요청(request).as(OrderDto.Res.class).getId();
+    }
+
+
 }

@@ -40,8 +40,8 @@ public class OrderItem {
     }
 
     public static OrderItem create(Item item, int count) {
-        int orderPrice = item.getTotalPrice(count);
-        return new OrderItem(item, orderPrice, count);
+        item.ready(count);
+        return new OrderItem(item, item.getPrice(), count);
     }
 
     public void addOrder(Orders order) {

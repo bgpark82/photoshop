@@ -22,8 +22,8 @@ public class Picture extends Item {
     }
 
     @Builder
-    public Picture(String name, int price, String artist, String imageUrl) {
-        super(name, price);
+    public Picture(String name, int price, int stockQuantity, String artist, String imageUrl) {
+        super(name, price, stockQuantity);
         this.artist = artist;
         this.imageUrl = imageUrl;
     }
