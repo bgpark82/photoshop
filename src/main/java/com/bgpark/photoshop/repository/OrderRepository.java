@@ -19,7 +19,7 @@ public class OrderRepository {
     }
 
     public List<Orders> findAll() {
-        return em.createQuery("SELECT o FROM Orders o" +
+        return em.createQuery("SELECT distinct o FROM Orders o" +
                         " join fetch o.user u" +
                         " join fetch o.delivery d" +
                         " join fetch o.orderItems oi" +

@@ -1,12 +1,13 @@
 package com.bgpark.photoshop.dto;
 
 import com.bgpark.photoshop.domain.Orders;
-import com.bgpark.photoshop.domain.item.Item;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,19 +17,19 @@ public class OrderDto {
     @NoArgsConstructor
     public static class Req {
         private Long userId;
-        private Long itemId;
-        private int count;
+        private List<OrderItemDto.Req> orderItems = new ArrayList<>();
 
-        private Req(Long userId, Long itemId, int count) {
+        private Req(Long userId, OrderItemDto.Req... orderItems) {
             this.userId = userId;
-            this.itemId = itemId;
-            this.count = count;
+            this.orderItems = Arrays.asList(orderItems);
         }
 
-        public static Req of(Long userId, Long itemId, int count) {
-            return new Req(userId, itemId, count);
+        public static Req of(Long userId, OrderItemDto.Req... orderItems) {
+            return new Req(userId, orderItems);
         }
     }
+
+
 
     @Data
     @Builder

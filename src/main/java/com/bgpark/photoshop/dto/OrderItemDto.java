@@ -1,7 +1,6 @@
 package com.bgpark.photoshop.dto;
 
 import com.bgpark.photoshop.domain.OrderItem;
-import com.bgpark.photoshop.domain.Orders;
 import com.bgpark.photoshop.domain.item.Item;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +28,14 @@ public class OrderItemDto {
                     oi.getOrderPrice(),
                     oi.getCount());
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Req {
+        private Long itemId;
+        private int count;
     }
 
 

@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.bgpark.photoshop.dto.OrderItemDto.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -27,16 +29,22 @@ public class OrderService {
 
     public OrderDto.Res save(OrderDto.Req request) {
         User user = findUserById(request);
-        Item item = findItemById(request);
+        List<OrderItem> orderItems = request.getOrderItems().stream()
+                .map(this::createOrderItem)
+                .collect(Collectors.toList());
 
-        OrderItem orderItem = OrderItem.create(item, request.getCount());
         Delivery delivery = Delivery.ready(user.getHomeAddress());
-
-        Orders order = Orders.create(user, delivery, orderItem);
+        Orders order = Orders.create(user, delivery, orderItems);
 
         orderRepository.save(order);
 
         return OrderDto.Res.of(order);
+    }
+
+    private OrderItem createOrderItem(Req orderItem) {
+        return OrderItem.create(
+                findItemById(orderItem.getItemId()),
+                orderItem.getCount());
     }
 
     @Transactional(readOnly = true)
@@ -47,8 +55,8 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    private Item findItemById(OrderDto.Req request) {
-        return itemRepository.findById(request.getItemId()).get();
+    private Item findItemById(Long itemId) {
+        return itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다"));
     }
 
     private User findUserById(OrderDto.Req request) {
