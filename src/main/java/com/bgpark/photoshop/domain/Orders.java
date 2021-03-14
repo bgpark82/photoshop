@@ -3,6 +3,7 @@ package com.bgpark.photoshop.domain;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Orders {
     private User user;
 
     // mappedBy : orderItem의 Order 변수명
+    @BatchSize(size = 1000)
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<OrderItem> orderItems = new ArrayList<>();
 
