@@ -8,6 +8,7 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 1
+    open-in-view: true
 
 # db
 logging.level.org.hibernate.SQL: debug            # 로그 형식으로 쿼리 보여주기

@@ -41,6 +41,7 @@ public class OrderService {
         return OrderDto.Res.of(order);
     }
 
+    @Transactional(readOnly = true)
     private OrderItem createOrderItem(Req orderItem) {
         return OrderItem.create(
                 findItemById(orderItem.getItemId()),
