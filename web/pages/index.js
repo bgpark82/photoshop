@@ -1,9 +1,11 @@
 import React from 'react';
+import Uploader from "../components/Uploader";
 
 const Index = () => {
     return (
         <div>
-            hello
+            <h1>File Uploader</h1>
+            <Uploader/>
         </div>
     );
 };
