@@ -1,7 +1,7 @@
 package com.bgpark.photoshop;
 
 
-import com.bgpark.photoshop.util.DatabaseCleanup;
+import com.bgpark.photoshop.utils.DatabaseCleanup;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.util;
+package com.bgpark.photoshop.utils;
 
 import com.google.common.base.CaseFormat;
 import org.springframework.beans.factory.InitializingBean;
