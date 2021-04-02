@@ -39,3 +39,5 @@ out/
 ### Custom ###
 node_modules
 .next
+
+application-secret.yml

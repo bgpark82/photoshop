@@ -18,7 +18,7 @@ class FileUtilsTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        이미지 = 이미지_생성();
+        이미지 = 이미지_멀티파트_생성();
     }
 
     @DisplayName("이미지 파일을 생성한다")

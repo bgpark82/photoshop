@@ -1,6 +1,9 @@
 server:
   port: 8081
+
 spring:
+  profiles:
+    include: secret
   h2:
     console:
       enabled: true
@@ -10,10 +13,11 @@ spring:
         default_batch_fetch_size: 1
     open-in-view: true
 
+
 # db
-logging.level.org.hibernate.SQL: debug            # 로그 형식으로 쿼리 보여주기
-spring.jpa.properties.hibernate.format_sql: true  # 압축된 쿼리를 읽기 좋게 포멧
-spring.jpa.hibernate.ddl-auto: update             # 서버 시작에 테이블 생성
+logging.level.org.hibernate.SQL: debug
+spring.jpa.properties.hibernate.format_sql: true
+spring.jpa.hibernate.ddl-auto: update
 
 spring.datasource.url: jdbc:h2:mem:testdb
 spring.datasource.driverClassName: org.h2.Driver

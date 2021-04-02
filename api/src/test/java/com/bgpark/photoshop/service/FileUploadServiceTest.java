@@ -13,7 +13,7 @@ import java.io.IOException;
 import static com.bgpark.photoshop.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("File Upload 서비스 테스트 관련")
+@DisplayName("File Upload 서비스 관련 테스트")
 public class FileUploadServiceTest {
 
     private FileUploadService fileUploadService;
@@ -22,7 +22,7 @@ public class FileUploadServiceTest {
     @BeforeEach
     void setUp() throws IOException {
         fileUploadService = new FileUploadService();
-        이미지 = 이미지_생성();
+        이미지 = 이미지_멀티파트_생성();
     }
 
     @DisplayName("UploadResponse를 생성한다")

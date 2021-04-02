@@ -1,9 +1,7 @@
 package com.bgpark.photoshop.acceptance;
 
 import com.bgpark.photoshop.AcceptanceTest;
-import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
@@ -13,6 +11,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
+import static com.bgpark.photoshop.step.FileStep.이미지_파일_생성;
+import static com.bgpark.photoshop.step.FileUploadStep.이미지_저장_요청;
+
 @DisplayName("파일 업로드 관련 인수 테스트")
 public class FileUploadAcceptanceTest extends AcceptanceTest {
 
@@ -20,7 +21,7 @@ public class FileUploadAcceptanceTest extends AcceptanceTest {
 
     @BeforeEach
     void setUp() {
-        이미지= new MultiPartSpecBuilder("file.jpg".getBytes()).build();
+        이미지 = new MultiPartSpecBuilder(이미지_파일_생성()).build();
     }
 
     @DisplayName("이미지를 업로드한다")
@@ -35,13 +36,5 @@ public class FileUploadAcceptanceTest extends AcceptanceTest {
 
     private void 이미지_저장_요청됨(ExtractableResponse<Response> response) {
         Assertions.assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-    }
-
-    private ExtractableResponse<Response> 이미지_저장_요청(MultiPartSpecification 이미지) {
-        return RestAssured
-                .given().log().all()
-                .multiPart(이미지)
-                .when().post("/api/v1/upload")
-                .then().log().all().extract();
     }
 }
