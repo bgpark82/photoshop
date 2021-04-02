@@ -13,8 +13,10 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import static com.bgpark.photoshop.domain.place.MediaType.photo;
+import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Component
 @RequiredArgsConstructor
@@ -26,29 +28,40 @@ public class S3Utils {
     private final AmazonS3 amazonS3;
 
     public UploadResponse upload(File file) throws InterruptedException, IOException {
-        String fileName = file.getName();
-        String filePath = "20210401/" + fileName;
+        final BufferedImage buffer = ImageIO.read(file);
+        uploadToS3(file);
 
-        BufferedImage bufferedImage = ImageIO.read(file);
-
-        TransferManager manager = TransferManagerBuilder
-                .standard()
-                .withS3Client(amazonS3)
-                .build();
-
-        PutObjectRequest request = new PutObjectRequest(S3_BUCKET_NAME, S3_BUCKET_KEY, file);
-        Upload upload = manager.upload(request);
-        upload.waitForUploadResult();
-
-        UploadResponse response = UploadResponse.builder()
-                .height(bufferedImage.getHeight())
-                .width(bufferedImage.getWidth())
+        final UploadResponse response = UploadResponse.builder()
+                .height(buffer.getHeight())
+                .width(buffer.getWidth())
                 .size(file.length())
                 .mediaType(photo)
-                .url(S3_BUCKET_URL + "/" + S3_BUCKET_NAME + "/" + filePath)
+                .url(getS3Url(file))
                 .build();
 
         file.delete();
         return response;
+    }
+
+    private void uploadToS3(File file) throws InterruptedException {
+        final Upload upload = getTransferManager()
+                .upload(new PutObjectRequest(S3_BUCKET_NAME, getFileNameWithPath(file), file));
+
+        upload.waitForUploadResult();
+    }
+
+    private String getFileNameWithPath(File file) {
+        return S3_BUCKET_KEY + "/" + LocalDate.now().format(ofPattern("yyyy/MM/dd")) + "/" + file.getName();
+    }
+
+    private String getS3Url(File file) {
+        return S3_BUCKET_URL + "/" + S3_BUCKET_NAME + "/" + getFileNameWithPath(file);
+    }
+
+    private TransferManager getTransferManager() {
+        return TransferManagerBuilder
+                .standard()
+                .withS3Client(amazonS3)
+                .build();
     }
 }

@@ -15,7 +15,7 @@ const Uploader = () => {
 
         const formData = new FormData();
         formData.append("file", file, file.name);
-        axios.post("http://localhost:8080/api/v1/upload", formData)
+        axios.post("http://localhost:8081/api/v1/upload", formData)
             .then(response => console.log(response))
     }
 

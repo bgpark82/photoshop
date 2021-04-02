@@ -19,7 +19,6 @@ import java.io.IOException;
 
 import static com.bgpark.photoshop.step.FileStep.이미지_생성_되어있음;
 import static com.bgpark.photoshop.step.S3Step.MOCK_S3_BUCKET_NAME;
-import static com.bgpark.photoshop.step.S3Step.MOCK_S3_KEY_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** S3Utils 빈만 가져오도록 한다 (S3MockConfig와 AppConfig가 겹침) */
@@ -57,7 +56,7 @@ class S3UtilsTest {
     }
 
     private void 이미지_업로드됨(UploadResponse response) {
-        assertThat(client.getObject(MOCK_S3_BUCKET_NAME, MOCK_S3_KEY_NAME).getObjectContent()).isNotNull();
+        assertThat(client.getObject(MOCK_S3_BUCKET_NAME, response.getUrl().substring(51)).getObjectContent()).isNotNull();
         assertThat(response.getUrl()).endsWith(이미지.getName());
     }
 
