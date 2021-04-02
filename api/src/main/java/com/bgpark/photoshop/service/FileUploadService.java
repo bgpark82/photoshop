@@ -35,5 +35,4 @@ public class FileUploadService {
                 .mediaType(photo)
                 .build();
     }
-
 }
