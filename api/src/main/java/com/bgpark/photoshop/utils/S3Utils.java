@@ -20,9 +20,9 @@ import static com.bgpark.photoshop.domain.place.MediaType.photo;
 @RequiredArgsConstructor
 public class S3Utils {
 
-    private static final String S3_BUCKET_URL = "https://s3.ap-northeast-2.amazonaws.com";
-    private static final String S3_BUCKET_KEY = "media";
-    private static final String S3_BUCKET_NAME = "bg-nearlog";
+    public static final String S3_BUCKET_URL = "https://s3.ap-northeast-2.amazonaws.com";
+    public static final String S3_BUCKET_KEY = "media";
+    public static final String S3_BUCKET_NAME = "bg-nearlog";
     private final AmazonS3 amazonS3;
 
     public UploadResponse upload(File file) throws InterruptedException, IOException {

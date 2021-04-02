@@ -27,10 +27,10 @@ public class FileStep {
     }
 
     public static File 이미지_생성_요청(MockMultipartFile image) {
-        return FileUtils.create(image);
+        return FileUtils.convert(image);
     }
 
     public static File 이미지_생성_되어있음() throws IOException {
-        return FileUtils.create(이미지_멀티파트_생성());
+        return FileUtils.convert(이미지_멀티파트_생성());
     }
 }

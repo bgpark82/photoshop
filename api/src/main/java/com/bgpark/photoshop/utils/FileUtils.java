@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class FileUtils {
 
-    public static File create(MultipartFile multipartFile) {
+    public static File convert(MultipartFile multipartFile) {
         String ext = getExtension(multipartFile.getOriginalFilename());
         String fileName = String.format("%s.%s", UUID.randomUUID().toString(), ext);
         String tmpdir = System.getProperty("java.io.tmpdir");

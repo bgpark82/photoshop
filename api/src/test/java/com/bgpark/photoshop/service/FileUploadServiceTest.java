@@ -1,6 +1,7 @@
 package com.bgpark.photoshop.service;
 
 import com.bgpark.photoshop.dto.upload.UploadResponse;
+import com.bgpark.photoshop.utils.S3Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,18 +11,25 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+import static com.bgpark.photoshop.domain.place.MediaType.photo;
 import static com.bgpark.photoshop.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("File Upload 서비스 관련 테스트")
 public class FileUploadServiceTest {
 
     private FileUploadService fileUploadService;
     private MockMultipartFile 이미지;
+    private S3Utils s3Utils;
 
     @BeforeEach
     void setUp() throws IOException {
-        fileUploadService = new FileUploadService();
+        s3Utils = mock(S3Utils.class);
+        fileUploadService = new FileUploadService(s3Utils);
+
         이미지 = 이미지_멀티파트_생성();
     }
 
@@ -45,6 +53,19 @@ public class FileUploadServiceTest {
     void checkType() {
         assertThat(이미지.getContentType()).isEqualTo(MediaType.IMAGE_PNG_VALUE);
         assertThat(이미지.getOriginalFilename()).isEqualTo(MOCK_IMAGE_NAME);
+    }
+
+    @DisplayName("파일을 S3에 업로드한다")
+    @Test
+    void uploadS3() throws IOException, InterruptedException {
+        // given
+        when(s3Utils.upload(any())).thenReturn(new UploadResponse(MOCK_IMAGE_HEIGHT, MOCK_IMAGE_WIDTH, MOCK_IMAGE_SIZE, photo, MOCK_IMAGE_NAME));
+
+        // when
+        UploadResponse response = fileUploadService.uploadS3(이미지);
+
+        // then
+        assertThat(response.getHeight()).isEqualTo(MOCK_IMAGE_HEIGHT);
     }
 }
 
