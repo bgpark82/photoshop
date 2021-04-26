@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.step;
 
-import com.bgpark.photoshop.domain.DeliveryStatus;
-import com.bgpark.photoshop.dto.OrderDto;
+import com.bgpark.photoshop.domain.order.domain.DeliveryStatus;
+import com.bgpark.photoshop.domain.order.dto.OrderDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

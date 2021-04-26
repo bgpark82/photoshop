@@ -1,8 +1,8 @@
 package com.bgpark.photoshop.acceptance;
 
 import com.bgpark.photoshop.AcceptanceTest;
-import com.bgpark.photoshop.dto.AddressDto;
-import com.bgpark.photoshop.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.AddressDto;
+import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;

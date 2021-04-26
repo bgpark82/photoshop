@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.repository;
 
 import com.bgpark.photoshop.config.JpaConfig;
-import com.bgpark.photoshop.domain.item.Picture;
+import com.bgpark.photoshop.domain.item.domain.Picture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

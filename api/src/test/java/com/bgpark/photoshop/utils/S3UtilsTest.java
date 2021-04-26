@@ -3,7 +3,7 @@ package com.bgpark.photoshop.utils;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.Bucket;
 import com.bgpark.photoshop.config.S3MockConfig;
-import com.bgpark.photoshop.dto.upload.UploadResponse;
+import com.bgpark.photoshop.domain.file.dto.UploadResponse;
 import io.findify.s3mock.S3Mock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

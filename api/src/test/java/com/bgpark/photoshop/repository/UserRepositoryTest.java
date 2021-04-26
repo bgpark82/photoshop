@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.repository;
 
-import com.bgpark.photoshop.domain.Address;
-import com.bgpark.photoshop.domain.User;
+import com.bgpark.photoshop.domain.user.domain.Address;
+import com.bgpark.photoshop.domain.user.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

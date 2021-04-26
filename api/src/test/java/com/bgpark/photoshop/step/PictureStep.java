@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.step;
 
-import com.bgpark.photoshop.domain.item.Picture;
-import com.bgpark.photoshop.dto.PictureDto;
+import com.bgpark.photoshop.domain.item.domain.Picture;
+import com.bgpark.photoshop.domain.order.dto.PictureDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

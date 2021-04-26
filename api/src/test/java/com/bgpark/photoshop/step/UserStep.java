@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.step;
 
-import com.bgpark.photoshop.dto.AddressDto;
-import com.bgpark.photoshop.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.AddressDto;
+import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

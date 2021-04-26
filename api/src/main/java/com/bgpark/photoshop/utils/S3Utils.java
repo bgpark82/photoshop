@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
-import com.bgpark.photoshop.dto.upload.UploadResponse;
+import com.bgpark.photoshop.domain.file.dto.UploadResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import static com.bgpark.photoshop.domain.place.MediaType.photo;
+import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
 import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Component
