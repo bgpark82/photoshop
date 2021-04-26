@@ -1,6 +1,6 @@
-package com.bgpark.photoshop.acceptance;
+package com.bgpark.photoshop.domain.user.acceptance;
 
-import com.bgpark.photoshop.AcceptanceTest;
+import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.user.dto.AddressDto;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.response.ExtractableResponse;
@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Set;
 
-import static com.bgpark.photoshop.step.UserStep.*;
+import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("사용자 관련 테스트")

@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.domain;
+package com.bgpark.photoshop.domain.item.domain;
 
 import org.junit.jupiter.api.Test;
 

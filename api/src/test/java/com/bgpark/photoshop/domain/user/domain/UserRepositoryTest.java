@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.repository;
+package com.bgpark.photoshop.domain.user.domain;
 
 import com.bgpark.photoshop.domain.user.domain.Address;
 import com.bgpark.photoshop.domain.user.domain.User;

@@ -17,8 +17,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.File;
 import java.io.IOException;
 
-import static com.bgpark.photoshop.step.FileStep.이미지_생성_되어있음;
-import static com.bgpark.photoshop.step.S3Step.MOCK_S3_BUCKET_NAME;
+import static com.bgpark.photoshop.domain.file.step.FileStep.이미지_생성_되어있음;
+import static com.bgpark.photoshop.domain.file.step.S3Step.MOCK_S3_BUCKET_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** S3Utils 빈만 가져오도록 한다 (S3MockConfig와 AppConfig가 겹침) */

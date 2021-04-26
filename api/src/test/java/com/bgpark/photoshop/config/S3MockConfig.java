@@ -3,17 +3,15 @@ package com.bgpark.photoshop.config;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.AnonymousAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.bgpark.photoshop.step.S3Step;
 import io.findify.s3mock.S3Mock;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
-import static com.bgpark.photoshop.step.S3Step.*;
+import static com.bgpark.photoshop.domain.file.step.S3Step.*;
 
 @TestConfiguration
 @Profile("test")

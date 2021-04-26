@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.step;
+package com.bgpark.photoshop.domain.file.step;
 
 import com.bgpark.photoshop.utils.FileUtils;
 import org.springframework.http.MediaType;

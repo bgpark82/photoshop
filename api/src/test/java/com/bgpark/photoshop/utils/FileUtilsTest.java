@@ -8,7 +8,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.IOException;
 
-import static com.bgpark.photoshop.step.FileStep.*;
+import static com.bgpark.photoshop.domain.file.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("FileUtils 관련 테스트")

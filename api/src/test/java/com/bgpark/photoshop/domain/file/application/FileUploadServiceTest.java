@@ -1,7 +1,6 @@
-package com.bgpark.photoshop.service;
+package com.bgpark.photoshop.domain.file.application;
 
 import com.bgpark.photoshop.domain.file.dto.UploadResponse;
-import com.bgpark.photoshop.domain.file.application.FileUploadService;
 import com.bgpark.photoshop.utils.S3Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
-import static com.bgpark.photoshop.step.FileStep.*;
+import static com.bgpark.photoshop.domain.file.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;

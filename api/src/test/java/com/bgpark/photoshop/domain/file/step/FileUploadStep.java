@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.step;
+package com.bgpark.photoshop.domain.file.step;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;

@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.step;
+package com.bgpark.photoshop.domain.order.step;
 
 import com.bgpark.photoshop.domain.order.domain.DeliveryStatus;
 import com.bgpark.photoshop.domain.order.dto.OrderDto;

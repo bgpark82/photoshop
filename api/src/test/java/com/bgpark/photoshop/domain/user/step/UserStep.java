@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.step;
+package com.bgpark.photoshop.domain.user.step;
 
 import com.bgpark.photoshop.domain.user.dto.AddressDto;
 import com.bgpark.photoshop.domain.user.dto.UserDto;

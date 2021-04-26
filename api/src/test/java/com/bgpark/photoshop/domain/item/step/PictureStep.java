@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.step;
+package com.bgpark.photoshop.domain.item.step;
 
 import com.bgpark.photoshop.domain.item.domain.Picture;
 import com.bgpark.photoshop.domain.order.dto.PictureDto;

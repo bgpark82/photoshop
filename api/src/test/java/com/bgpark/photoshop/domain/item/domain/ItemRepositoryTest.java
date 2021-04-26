@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.repository;
+package com.bgpark.photoshop.domain.item.domain;
 
 import com.bgpark.photoshop.config.JpaConfig;
 import com.bgpark.photoshop.domain.item.domain.Picture;
