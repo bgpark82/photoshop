@@ -35,3 +35,11 @@ cd ./web
 npm install
 npm start
 ```
+
+## Test
+```$xslt
+./gradle test
+```
+
+## Author
+Byeonggil Park
