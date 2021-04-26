@@ -1,25 +1,37 @@
 # Photo-shop
-자신이 촬영한 사진을 판매할 수 있는 플랫폼 데모 프로젝트
+This is the web platform which consumer can buy or sell their pictures while they are traveling.
 
-### 요구사항
-[] 회원가입
-[] 아이템 업로드
-[] 주문하기
+## Motivation
+This project has been started to learn and combine Travel and E-Commerce domain to study. Understanding and Keeping tracking of the current domain architecture to advanced level. Developing and Updating the basic architecture whenever studying new approach based on the ATDD/TDD and keeping the flexible code as I update it new version is the main goal     
 
-[] 회원 조회
-[] 아이템 조회
-[] 주문 조회
+## Build Status
+Planning on using Travis CI as a continues integration tool. The test and build status will be seen in this section
 
-[] 회원탈퇴
-[] 아이템 삭제
-[] 주문취소
+## Language/Framework
+### Server
+- Java8
+- SpringBoot
+- JPA/Hibernate
+- QueryDsl
+- MariaDB/H2
+- Junit5/RestAssured
+- AWS
 
-### UML 구조
+### Frontend
+- React.js
+- Next.js
+- Emotion
 
-
-### 시작
+## Installation
+### Server
 ```$xslt
 ./gradlew build
 java -jar /build/libs/*.jar
 ```
 
+### Frontend
+```$xslt
+cd ./web
+npm install
+npm start
+```
