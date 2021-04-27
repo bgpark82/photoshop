@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.utils;
 
+import com.bgpark.photoshop.domain.file.dto.FileType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class FileUtilsTest {
     }
 
 
-    @DisplayName("파일의 확장자를 구한다")
+    @DisplayName("확장자가 png인 경우 photo 타입을 반환한다")
     @Test
     void getFileExtension() {
         // when
@@ -40,6 +41,16 @@ class FileUtilsTest {
 
         // then
         assertThat(ext).isEqualTo("png");
+    }
+
+    @DisplayName("파일 타입을 구한다")
+    @Test
+    void getFileType() {
+        // when
+        FileType type = FileUtils.getFileType(이미지.getOriginalFilename());
+
+        // then
+        assertThat(type).isEqualTo(FileType.photo);
     }
 
     private void 이미지_생성됨(File file) {

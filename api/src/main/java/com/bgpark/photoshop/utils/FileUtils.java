@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.utils;
 
+import com.bgpark.photoshop.domain.file.dto.FileType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -43,5 +44,7 @@ public class FileUtils {
         return ext;
     }
 
-
+    public static FileType getFileType(String originalFilename) {
+        return FileType.photo;
+    }
 }
