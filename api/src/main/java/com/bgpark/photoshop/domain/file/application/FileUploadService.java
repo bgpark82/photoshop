@@ -2,7 +2,7 @@ package com.bgpark.photoshop.domain.file.application;
 
 import com.bgpark.photoshop.domain.file.dto.UploadResponse;
 import com.bgpark.photoshop.utils.FileUtils;
-import com.bgpark.photoshop.utils.S3Utils;
+import com.bgpark.photoshop.domain.common.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +18,11 @@ import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
 @RequiredArgsConstructor
 public class FileUploadService {
 
-    private final S3Utils s3Utils;
+    private final S3Uploader s3Uploader;
 
     public UploadResponse uploadS3(MultipartFile multipartFile) throws IOException, InterruptedException {
         File file = FileUtils.convert(multipartFile);
-        return s3Utils.upload(file);
+        return s3Uploader.upload(file);
     }
 
     public UploadResponse getUploadResponse(File file) throws IOException {

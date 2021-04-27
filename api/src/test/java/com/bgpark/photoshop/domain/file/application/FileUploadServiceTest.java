@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.domain.file.application;
 
 import com.bgpark.photoshop.domain.file.dto.UploadResponse;
-import com.bgpark.photoshop.utils.S3Utils;
+import com.bgpark.photoshop.domain.common.S3Uploader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,12 +23,12 @@ public class FileUploadServiceTest {
 
     private FileUploadService fileUploadService;
     private MockMultipartFile 이미지;
-    private S3Utils s3Utils;
+    private S3Uploader s3Uploader;
 
     @BeforeEach
     void setUp() throws IOException {
-        s3Utils = mock(S3Utils.class);
-        fileUploadService = new FileUploadService(s3Utils);
+        s3Uploader = mock(S3Uploader.class);
+        fileUploadService = new FileUploadService(s3Uploader);
 
         이미지 = 이미지_멀티파트_생성();
     }
@@ -59,7 +59,7 @@ public class FileUploadServiceTest {
     @Test
     void uploadS3() throws IOException, InterruptedException {
         // given
-        when(s3Utils.upload(any())).thenReturn(new UploadResponse(MOCK_IMAGE_HEIGHT, MOCK_IMAGE_WIDTH, MOCK_IMAGE_SIZE, photo, MOCK_IMAGE_NAME));
+        when(s3Uploader.upload(any())).thenReturn(new UploadResponse(MOCK_IMAGE_HEIGHT, MOCK_IMAGE_WIDTH, MOCK_IMAGE_SIZE, photo, MOCK_IMAGE_NAME));
 
         // when
         UploadResponse response = fileUploadService.uploadS3(이미지);

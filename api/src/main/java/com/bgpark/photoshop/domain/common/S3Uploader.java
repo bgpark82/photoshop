@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.utils;
+package com.bgpark.photoshop.domain.common;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -20,11 +20,15 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 
 @Component
 @RequiredArgsConstructor
-public class S3Utils {
+public class S3Uploader {
 
-    public static final String S3_BUCKET_URL = "https://s3.ap-northeast-2.amazonaws.com";
-    public static final String S3_BUCKET_KEY = "media";
-    public static final String S3_BUCKET_NAME = "bg-nearlog";
+    private static final String S3_BUCKET_URL = "https://s3.ap-northeast-2.amazonaws.com";
+    private static final String S3_BUCKET_KEY = "media";
+    private static final String S3_BUCKET_NAME = "bg-nearlog";
+    private static final String S3_PATH_FORMATTER = "%s/%s/%s";
+    private static final String FILE_PATH_FORMATTER = "%s/%s/%s";
+    private static final String FILE_DATE_PATTERN = "yyyy/MM/dd";
+
     private final AmazonS3 amazonS3;
 
     public UploadResponse upload(File file) throws InterruptedException, IOException {
@@ -51,11 +55,11 @@ public class S3Utils {
     }
 
     private String getFileNameWithPath(File file) {
-        return S3_BUCKET_KEY + "/" + LocalDate.now().format(ofPattern("yyyy/MM/dd")) + "/" + file.getName();
+        return String.format(FILE_PATH_FORMATTER, S3_BUCKET_KEY, LocalDate.now().format(ofPattern(FILE_DATE_PATTERN)), file.getName());
     }
 
     private String getS3Url(File file) {
-        return S3_BUCKET_URL + "/" + S3_BUCKET_NAME + "/" + getFileNameWithPath(file);
+        return String.format(S3_PATH_FORMATTER, S3_BUCKET_URL, S3_BUCKET_NAME, getFileNameWithPath(file));
     }
 
     private TransferManager getTransferManager() {
