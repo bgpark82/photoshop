@@ -1,14 +1,19 @@
 package com.bgpark.photoshop.utils;
 
 import com.bgpark.photoshop.domain.file.dto.FileType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 public class FileUtils {
 
+    private static final String[] IMAGE_TYPES = {"jpg", "jpeg", "png", "gif", "bmp", "tiff", "jpe"};
     private static final String TEMP_DIRECTORY = "java.io.tmpdir";
     private static final String DEFAULT_EXT = "jpg";
     private static final String FILENAME_FORMATTER = "%s.%s";
@@ -44,7 +49,13 @@ public class FileUtils {
         return ext;
     }
 
-    public static FileType getFileType(String originalFilename) {
+    public static FileType getFileType(String fileName) {
+        final String ext = getExtension(fileName);
+        final boolean isImageType = Arrays.stream(IMAGE_TYPES).anyMatch(t -> t.equals(ext));
+
+        if(isImageType) {
+            return FileType.photo;
+        }
         return FileType.photo;
     }
 }
