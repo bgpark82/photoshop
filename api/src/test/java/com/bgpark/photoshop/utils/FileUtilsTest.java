@@ -50,7 +50,7 @@ class FileUtilsTest {
         FileType type = FileUtils.getFileType(이미지.getOriginalFilename());
 
         // then
-        assertThat(type).isEqualTo(FileType.photo);
+        assertThat(type).isEqualTo(FileType.PHOTO);
     }
 
     private void 이미지_생성됨(File file) {
