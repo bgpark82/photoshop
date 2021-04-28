@@ -36,21 +36,6 @@ public class FileUploadServiceTest {
         이미지 = 이미지_멀티파트_생성();
     }
 
-    @DisplayName("UploadResponse를 생성한다")
-    @Test
-    void createUploadResponse() throws IOException {
-        // given
-        File file = 이미지_생성_요청(이미지);
-
-        // when
-        UploadResponse response = fileUploadService.getUploadResponse(file);
-
-        // then
-        assertThat(response.getHeight()).isEqualTo(MOCK_IMAGE_HEIGHT);
-        assertThat(response.getWidth()).isEqualTo(MOCK_IMAGE_WIDTH);
-        assertThat(response.getSize()).isEqualTo(MOCK_IMAGE_SIZE);
-    }
-
     @DisplayName("Multipart 타입을 체크한다")
     @Test
     void checkType() {
@@ -69,6 +54,8 @@ public class FileUploadServiceTest {
 
         // then
         assertThat(response.getHeight()).isEqualTo(MOCK_IMAGE_HEIGHT);
+        assertThat(response.getWidth()).isEqualTo(MOCK_IMAGE_WIDTH);
+        assertThat(response.getSize()).isEqualTo(MOCK_IMAGE_SIZE);
     }
 
     @DisplayName("빈 Multipart 파일을 업로드하면 Exception 발생한다")
