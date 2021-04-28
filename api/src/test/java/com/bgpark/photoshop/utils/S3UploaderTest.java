@@ -62,7 +62,7 @@ class S3UploaderTest {
     }
 
     private UploadResponse 이미지_업로드_요청() throws InterruptedException, IOException {
-        return s3Uploader.upload(이미지);
+        return s3Uploader.uploadS3(이미지);
     }
 
     private Bucket 버킷_생성_되어있음(AmazonS3 client) {

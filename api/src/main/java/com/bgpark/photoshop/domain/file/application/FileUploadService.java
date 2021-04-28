@@ -19,8 +19,8 @@ public class FileUploadService {
 
     public UploadResponse uploadS3(MultipartFile multipartFile) throws IOException, InterruptedException {
         checkMultipart(multipartFile);
-        File file = FileUtils.convert(multipartFile);
-        return s3Uploader.upload(file);
+        final File file = FileUtils.convert(multipartFile);
+        return s3Uploader.uploadS3(file);
     }
 
     private void checkMultipart(MultipartFile multipartFile) {

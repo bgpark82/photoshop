@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 
 import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
@@ -31,20 +32,28 @@ public class S3Uploader {
 
     private final AmazonS3 amazonS3;
 
-    public UploadResponse upload(File file) throws InterruptedException, IOException {
-        final BufferedImage buffer = ImageIO.read(file);
-        uploadToS3(file);
+    // ImageIO : https://docs.oracle.com/javase/tutorial/2d/images/loadimage.html
+    public UploadResponse uploadS3(File file) throws InterruptedException, IOException {
+        UploadResponse response;
+        try {
+            response = getUploadResponse(file, ImageIO.read(file));
+            uploadToS3(file);
+        } catch(IOException e) {
+            throw new RuntimeException("파일 생성 에러");
+        } finally {
+            file.delete();
+        }
+        return response;
+    }
 
-        final UploadResponse response = UploadResponse.builder()
+    private UploadResponse getUploadResponse(File file, BufferedImage buffer) {
+        return UploadResponse.builder()
                 .height(buffer.getHeight())
                 .width(buffer.getWidth())
                 .size(file.length())
                 .mediaType(photo)
                 .url(getS3Url(file))
                 .build();
-
-        file.delete();
-        return response;
     }
 
     private void uploadToS3(File file) throws InterruptedException {

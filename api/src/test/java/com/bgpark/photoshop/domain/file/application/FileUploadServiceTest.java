@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 import static com.bgpark.photoshop.domain.file.step.FileStep.*;
@@ -47,7 +46,7 @@ public class FileUploadServiceTest {
     @Test
     void uploadS3() throws IOException, InterruptedException {
         // given
-        when(s3Uploader.upload(any())).thenReturn(new UploadResponse(MOCK_IMAGE_HEIGHT, MOCK_IMAGE_WIDTH, MOCK_IMAGE_SIZE, photo, MOCK_IMAGE_NAME));
+        when(s3Uploader.uploadS3(any())).thenReturn(new UploadResponse(MOCK_IMAGE_HEIGHT, MOCK_IMAGE_WIDTH, MOCK_IMAGE_SIZE, photo, MOCK_IMAGE_NAME));
 
         // when
         UploadResponse response = fileUploadService.uploadS3(이미지);
