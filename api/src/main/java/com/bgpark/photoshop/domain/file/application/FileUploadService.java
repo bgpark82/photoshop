@@ -20,7 +20,7 @@ public class FileUploadService {
     public UploadResponse uploadS3(MultipartFile multipartFile) throws IOException, InterruptedException {
         checkMultipart(multipartFile);
         final File file = FileUtils.convert(multipartFile);
-        return s3Uploader.uploadS3(file);
+        return s3Uploader.upload(file);
     }
 
     private void checkMultipart(MultipartFile multipartFile) {
