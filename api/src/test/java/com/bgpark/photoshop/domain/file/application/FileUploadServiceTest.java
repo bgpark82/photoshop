@@ -25,13 +25,14 @@ public class FileUploadServiceTest {
 
     private FileUploadService fileUploadService;
     private MockMultipartFile 이미지;
+    private MockMultipartFile 빈_이미지;
     private S3Uploader s3Uploader;
 
     @BeforeEach
     void setUp() throws IOException {
         s3Uploader = mock(S3Uploader.class);
         fileUploadService = new FileUploadService(s3Uploader);
-
+        빈_이미지 = 빈_이미지_멀티파트_생성();
         이미지 = 이미지_멀티파트_생성();
     }
 
@@ -73,11 +74,7 @@ public class FileUploadServiceTest {
     @DisplayName("빈 Multipart 파일을 업로드하면 Exception 발생한다")
     @Test
     void emptyMultipart() {
-        // given
-        MockMultipartFile empty = new MockMultipartFile("empty", (byte[]) null);
-
-        // when
-        assertThatThrownBy(() -> fileUploadService.uploadS3(empty))
+        assertThatThrownBy(() -> fileUploadService.uploadS3(빈_이미지))
                 .isInstanceOf(EmptyMultipartException.class);
     }
 }

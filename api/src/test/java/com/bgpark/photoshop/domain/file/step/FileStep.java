@@ -26,6 +26,10 @@ public class FileStep {
         return new MockMultipartFile("file", MOCK_IMAGE_NAME, MediaType.IMAGE_PNG_VALUE, new FileInputStream(file));
     }
 
+    public static MockMultipartFile 빈_이미지_멀티파트_생성() {
+        return new MockMultipartFile("empty", (byte[]) null);
+    }
+
     public static File 이미지_생성_요청(MockMultipartFile image) {
         return FileUtils.convert(image);
     }
