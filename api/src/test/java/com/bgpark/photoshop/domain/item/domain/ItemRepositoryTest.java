@@ -2,6 +2,8 @@ package com.bgpark.photoshop.domain.item.domain;
 
 import com.bgpark.photoshop.config.JpaConfig;
 import com.bgpark.photoshop.domain.item.domain.Picture;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+@DisplayName("아이템 관련 Repository 테스트")
 @DataJpaTest
 @MockBean(JpaConfig.class) // 설정을 Mock으로 추가할 수 있었다
 class ItemRepositoryTest {

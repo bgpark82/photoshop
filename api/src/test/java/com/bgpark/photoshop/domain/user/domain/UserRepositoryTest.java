@@ -1,7 +1,6 @@
 package com.bgpark.photoshop.domain.user.domain;
 
-import com.bgpark.photoshop.domain.user.domain.Address;
-import com.bgpark.photoshop.domain.user.domain.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,6 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayName("사용자 관련 Repository 테스트")
 @DataJpaTest
 @Transactional
 class UserRepositoryTest {

@@ -15,7 +15,7 @@ import java.util.Set;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("사용자 관련 테스트")
+@DisplayName("사용자 관련 인수 테스트")
 public class UserAcceptanceTest extends AcceptanceTest {
 
     AddressDto.SaveReq 사용자_집주소, 사용자_회사주소;
