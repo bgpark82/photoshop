@@ -28,17 +28,6 @@ public class FileUtils {
         return storeFile;
     }
 
-    private static File getFile(MultipartFile multipartFile) {
-        final String fileName = getFileName(multipartFile);
-        return new File(tmpdir, fileName);
-    }
-
-    private static String getFileName(MultipartFile multipartFile) {
-        final String fileName = UUID.randomUUID().toString();
-        final String ext = getExtension(multipartFile.getOriginalFilename());
-        return String.format(FILENAME_FORMATTER, fileName, ext);
-    }
-
     public static String getExtension(String fileName) {
         final int position = fileName.lastIndexOf(EXT_DELIMITER);
         String ext = fileName.substring(position + 1);
@@ -46,7 +35,19 @@ public class FileUtils {
         return ext;
     }
 
-    // TODO: 더 나은 디자인 고민
+    private static File getFile(MultipartFile multipartFile) {
+        return new File(tmpdir, getFileName(multipartFile));
+    }
+
+    private static String getFileName(MultipartFile multipartFile) {
+        return String.format(FILENAME_FORMATTER, getRandomFileName(), getExtension(multipartFile.getOriginalFilename()));
+    }
+
+    private static String getRandomFileName() {
+        return UUID.randomUUID().toString();
+    }
+
+    // TODO: 더 나은 디자인 고민, FileType이 Utils에 의존해서는 안될 것 같다
     public static FileType getFileType(String fileName) {
         final String ext = getExtension(fileName);
         if(PHOTO.hasType(ext)) {
