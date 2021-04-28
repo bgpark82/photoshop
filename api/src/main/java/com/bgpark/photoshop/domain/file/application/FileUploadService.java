@@ -1,6 +1,5 @@
 package com.bgpark.photoshop.domain.file.application;
 
-import com.bgpark.photoshop.domain.common.S3Uploader;
 import com.bgpark.photoshop.domain.file.dto.UploadResponse;
 import com.bgpark.photoshop.exception.EmptyMultipartException;
 import com.bgpark.photoshop.utils.FileUtils;

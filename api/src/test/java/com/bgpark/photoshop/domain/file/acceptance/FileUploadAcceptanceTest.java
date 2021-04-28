@@ -19,6 +19,7 @@ public class FileUploadAcceptanceTest extends AcceptanceTest {
 
     private MultiPartSpecification 이미지;
 
+    // TODO: 업로드 이후 삭제
     @BeforeEach
     void setUp() {
         이미지 = new MultiPartSpecBuilder(이미지_파일_생성()).build();

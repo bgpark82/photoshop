@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.domain.common;
+package com.bgpark.photoshop.domain.file.application;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
