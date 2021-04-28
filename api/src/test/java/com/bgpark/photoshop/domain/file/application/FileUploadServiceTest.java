@@ -7,13 +7,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
 import static com.bgpark.photoshop.domain.file.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -67,5 +70,17 @@ public class FileUploadServiceTest {
         // then
         assertThat(response.getHeight()).isEqualTo(MOCK_IMAGE_HEIGHT);
     }
+
+    @DisplayName("빈 Multipart 파일을 업로드하면 Exception 발생한다")
+    @Test
+    void emptyMultipart() throws IOException, InterruptedException {
+        // given
+        MockMultipartFile empty = new MockMultipartFile("empty", (byte[]) null);
+
+        // when
+        assertThatThrownBy(() -> fileUploadService.uploadS3(empty))
+                .isInstanceOf(RuntimeException.class);
+    }
+
 }
 
