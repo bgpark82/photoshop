@@ -1,20 +1,19 @@
 package com.bgpark.photoshop.domain.file.application;
 
-import com.bgpark.photoshop.domain.file.dto.UploadResponse;
 import com.bgpark.photoshop.domain.common.S3Uploader;
+import com.bgpark.photoshop.domain.file.dto.UploadResponse;
+import com.bgpark.photoshop.exception.EmptyMultipartException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
-import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
 import static com.bgpark.photoshop.domain.file.step.FileStep.*;
+import static com.bgpark.photoshop.domain.place.domain.MediaType.photo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -73,14 +72,13 @@ public class FileUploadServiceTest {
 
     @DisplayName("빈 Multipart 파일을 업로드하면 Exception 발생한다")
     @Test
-    void emptyMultipart() throws IOException, InterruptedException {
+    void emptyMultipart() {
         // given
         MockMultipartFile empty = new MockMultipartFile("empty", (byte[]) null);
 
         // when
         assertThatThrownBy(() -> fileUploadService.uploadS3(empty))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(EmptyMultipartException.class);
     }
-
 }
 

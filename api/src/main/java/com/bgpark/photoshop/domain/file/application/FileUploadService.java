@@ -1,6 +1,7 @@
 package com.bgpark.photoshop.domain.file.application;
 
 import com.bgpark.photoshop.domain.file.dto.UploadResponse;
+import com.bgpark.photoshop.exception.EmptyMultipartException;
 import com.bgpark.photoshop.utils.FileUtils;
 import com.bgpark.photoshop.domain.common.S3Uploader;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class FileUploadService {
     private final S3Uploader s3Uploader;
 
     public UploadResponse uploadS3(MultipartFile multipartFile) throws IOException, InterruptedException {
+        checkMultipart(multipartFile);
         File file = FileUtils.convert(multipartFile);
         return s3Uploader.upload(file);
     }
@@ -35,4 +37,11 @@ public class FileUploadService {
                 .mediaType(photo)
                 .build();
     }
+
+    private void checkMultipart(MultipartFile multipartFile) {
+        if(multipartFile.isEmpty()) {
+            throw new EmptyMultipartException();
+        }
+    }
+
 }
