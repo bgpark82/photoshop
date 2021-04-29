@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("장소 관련 인수테스트")
 public class PlaceAcceptanceTest extends AcceptanceTest {
 
+    @DisplayName("장소를 저장한다")
     @Test
     void save() {
         // given
