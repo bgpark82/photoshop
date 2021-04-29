@@ -1,7 +1,11 @@
 package com.bgpark.photoshop.domain.place.dto;
 
 import com.bgpark.photoshop.domain.place.domain.Place;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 public class PlaceRequest {
 
     private String name;

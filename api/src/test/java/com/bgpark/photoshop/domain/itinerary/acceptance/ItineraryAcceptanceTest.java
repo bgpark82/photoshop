@@ -1,18 +1,17 @@
-package com.bgpark.photoshop.domain.itinerary;
+package com.bgpark.photoshop.domain.itinerary.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryRequest;
-import com.bgpark.photoshop.domain.place.dto.PlaceRequest;
 import com.bgpark.photoshop.domain.place.dto.PlaceResponse;
-import com.bgpark.photoshop.domain.place.step.PlaceStep;
-import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
+import static com.bgpark.photoshop.domain.itinerary.step.ItineraryStep.일정_저장;
+import static com.bgpark.photoshop.domain.itinerary.step.ItineraryStep.일정_저장_요청;
 import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_생성;
 import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_저장되어_있음;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,23 +20,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ItineraryAcceptanceTest extends AcceptanceTest {
 
     PlaceResponse 남산;
+    ItineraryRequest 서울여행;
+
+    @BeforeEach
+    void setUp() {
+        남산 = 장소_저장되어_있음(장소_생성("남산", 37.5537747, 126.9722148));
+        서울여행 = 일정_저장("서울여행", 남산.getId(), 1);
+    }
 
     @DisplayName("새로운 일정을 생선한다")
     @Test
     void save() {
-        // given
-        남산 = 장소_저장되어_있음(장소_생성("남산", 37.5537747, 126.9722148));
-        ItineraryRequest 서울여행 = new ItineraryRequest("서울여행", 남산.getId(), 1);
+
 
         // when
-        ExtractableResponse<Response> response = RestAssured
-                .given().log().all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(서울여행)
-                .when().post("/api/v1/itineraries")
-                .then().log().all().extract();
+        ExtractableResponse<Response> response = 일정_저장_요청(서울여행);
 
         // then
+        일정_저장_됨(response);
+    }
+
+    private void 일정_저장_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.header("location")).isEqualTo("/itinerary/1");
     }
