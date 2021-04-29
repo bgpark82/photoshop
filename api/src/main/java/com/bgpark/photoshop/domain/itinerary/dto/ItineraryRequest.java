@@ -1,5 +1,10 @@
 package com.bgpark.photoshop.domain.itinerary.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 public class ItineraryRequest {
 
     private String name;
