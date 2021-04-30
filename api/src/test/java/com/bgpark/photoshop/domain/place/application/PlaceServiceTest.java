@@ -15,7 +15,6 @@ import java.util.List;
 import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_엔티티_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
@@ -35,19 +34,19 @@ class PlaceServiceTest {
     @Test
     void findByKeyword() {
         // given
-        Place 남산 = 장소_엔티티_생성(1L, "남산", 37.5537747, 126.9722148);
-        Place 남포동 = 장소_엔티티_생성(2L, "남포동", 35.0963437, 129.0287312);
-        Place 경복궁 = 장소_엔티티_생성(3L, "경복궁", 37.5796212, 126.974847);
-        when(placeRepository.save(any())).thenReturn(newArrayList(남산, 남포동, 경복궁));
+        String keyword = "남";
+        List<Place> places = newArrayList(
+                장소_엔티티_생성(1L, "남산", 37.5537747, 126.9722148),
+                장소_엔티티_생성(2L, "남포동", 35.0963437, 129.0287312));
+        when(placeRepository.findByNameStartsWith(keyword)).thenReturn(places);
 
         // when
-        List<PlaceResponse> places = placeService.findByKeyword("남");
+        List<PlaceResponse> response = placeService.findByKeyword(keyword);
 
         // then
-        assertThat(places).containsExactly(
+        assertThat(response).containsExactly(
                 createPlaceResponse(1L, "남산", 37.5537747, 126.9722148),
-                createPlaceResponse(2L, "남포동", 35.0963437, 129.0287312),
-                createPlaceResponse(3L, "경복궁", 37.5796212, 126.974847));
+                createPlaceResponse(2L, "남포동", 35.0963437, 129.0287312));
     }
 
     private PlaceResponse createPlaceResponse(long placeId, String name, double lat, double lng) {

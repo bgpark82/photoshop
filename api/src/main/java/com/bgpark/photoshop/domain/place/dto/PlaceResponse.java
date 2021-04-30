@@ -1,9 +1,11 @@
 package com.bgpark.photoshop.domain.place.dto;
 
 import com.bgpark.photoshop.domain.place.domain.Place;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class PlaceResponse {
 
     private Long id;

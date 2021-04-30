@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -23,6 +25,8 @@ public class PlaceService {
     }
 
     public List<PlaceResponse> findByKeyword(String keyword) {
-        return null;
+        return placeRepository.findByNameStartsWith(keyword).stream()
+                .map(PlaceResponse::of)
+                .collect(toList());
     }
 }
