@@ -1,9 +1,11 @@
 package com.bgpark.photoshop.domain.itinerary.step;
 
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryRequest;
+import com.bgpark.photoshop.domain.place.dto.ScheduleRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.assertj.core.util.Lists;
 import org.springframework.http.MediaType;
 
 public class ItineraryStep {
@@ -17,7 +19,7 @@ public class ItineraryStep {
                 .then().log().all().extract();
     }
 
-    public static ItineraryRequest 일정_저장(String name, Long placeId, int seq) {
-        return new ItineraryRequest(name, placeId, seq);
+    public static ItineraryRequest 일정_저장(String name, ScheduleRequest... schedules) {
+        return new ItineraryRequest(name, Lists.newArrayList(schedules));
     }
 }

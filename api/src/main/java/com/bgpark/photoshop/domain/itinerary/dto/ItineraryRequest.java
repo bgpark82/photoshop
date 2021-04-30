@@ -1,19 +1,20 @@
 package com.bgpark.photoshop.domain.itinerary.dto;
 
+import com.bgpark.photoshop.domain.place.dto.ScheduleRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class ItineraryRequest {
 
     private String name;
-    private Long placeId;
-    private int seq;
+    private List<ScheduleRequest> schedules;
 
-    public ItineraryRequest(String name, Long placeId, int seq) {
+    public ItineraryRequest(String name, List<ScheduleRequest> schedules) {
         this.name = name;
-        this.placeId = placeId;
-        this.seq = seq;
+        this.schedules = schedules;
     }
 }

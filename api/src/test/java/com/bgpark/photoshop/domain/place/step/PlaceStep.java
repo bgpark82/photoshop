@@ -18,7 +18,8 @@ public class PlaceStep {
                 .then().log().all().extract();
     }
 
-    public static PlaceResponse 장소_저장되어_있음(PlaceRequest place) {
+    public static PlaceResponse 장소_저장되어_있음(String name, double lat, double lng) {
+        PlaceRequest place = 장소_생성(name, lat, lng);
         return 장소_저장_요청(place).as(PlaceResponse.class);
     }
 
