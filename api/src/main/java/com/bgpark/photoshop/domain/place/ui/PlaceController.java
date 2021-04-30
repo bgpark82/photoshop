@@ -25,4 +25,9 @@ public class PlaceController {
                 .created(URI.create("/place/"+ place.getId()))
                 .body(place);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<PlaceResponse> findByKeyword(@RequestParam String keyword) {
+        return ResponseEntity.ok().build();
+    }
 }
