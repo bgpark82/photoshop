@@ -19,17 +19,20 @@ public class ItineraryService {
     private final ItineraryRepository itineraryRepository;
 
     public ItineraryResponse save(ItineraryRequest request) {
+        final Itinerary itinerary = itineraryRepository.save(getItinerary(request));
+        return ItineraryResponse.of(itinerary);
+    }
 
-        Itinerary itinerary = Itinerary.create(request.getName());
-
-        List<Schedule> schedules = request.getSchedules().stream()
-                .map(s -> Schedule.create(s))
-                .collect(toList());
-
+    private Itinerary getItinerary(ItineraryRequest request) {
+        final Itinerary itinerary = Itinerary.create(request.getName());
+        final List<Schedule> schedules = getSchedules(request);
         itinerary.setSchedules(schedules);
+        return itinerary;
+    }
 
-        Itinerary itinerarySaved = itineraryRepository.save(itinerary);
-
-        return ItineraryResponse.of(itinerarySaved);
+    private List<Schedule> getSchedules(ItineraryRequest request) {
+        return request.getSchedules().stream()
+                .map(Schedule::create)
+                .collect(toList());
     }
 }
