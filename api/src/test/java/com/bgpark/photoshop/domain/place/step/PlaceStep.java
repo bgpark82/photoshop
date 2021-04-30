@@ -4,10 +4,15 @@ import com.bgpark.photoshop.domain.place.domain.Place;
 import com.bgpark.photoshop.domain.place.dto.PlaceRequest;
 import com.bgpark.photoshop.domain.place.dto.PlaceResponse;
 import io.restassured.RestAssured;
+import io.restassured.mapper.TypeRef;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 public class PlaceStep {
@@ -19,6 +24,26 @@ public class PlaceStep {
                 .body(place)
                 .when().post("/api/v1/places")
                 .then().log().all().extract();
+    }
+
+    public static ExtractableResponse<Response> 장소_키워드_조회_요청(String keyword) {
+        return RestAssured
+                .given().log().all()
+                .param("keyword", keyword)
+                .when().get("/api/v1/places/search")
+                .then().log().all().extract();
+    }
+
+    public static void 장소_키워드_조회_됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.as(new TypeRef<List<PlaceResponse>>() {})).containsExactly( // JsonPath: https://github.com/json-path/JsonPath#what-is-returned-when
+                장소_응답_생성(1L, "남산", 37.5537747, 126.9722148),
+                장소_응답_생성(2L, "남포동", 35.0963437,129.0287312));
+    }
+
+    public static void 장소_저장_됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.header("location")).isEqualTo("/place/1");
     }
 
     public static PlaceResponse 장소_저장되어_있음(String name, double lat, double lng) {
