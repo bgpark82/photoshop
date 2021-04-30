@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -18,5 +20,9 @@ public class PlaceService {
     public PlaceResponse save(PlaceRequest request) {
         final Place place = placeRepository.save(request.of());
         return PlaceResponse.of(place);
+    }
+
+    public List<PlaceResponse> findByKeyword(String keyword) {
+        return null;
     }
 }
