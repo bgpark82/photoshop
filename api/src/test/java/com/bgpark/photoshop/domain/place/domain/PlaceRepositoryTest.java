@@ -19,14 +19,14 @@ class PlaceRepositoryTest {
 
     @DisplayName("장소를 키워드로 조회한다")
     @Test
-    void findByNameEndsWith() {
+    void findByNameStartWith() {
         // given
         placeRepository.save(Place.create("남산", 37.5537747, 126.9722148));
         placeRepository.save(Place.create("남포동", 35.0963437, 129.0287312));
         placeRepository.save(Place.create( "경복궁", 37.5796212, 126.974847));
 
         // when
-        List<Place> places = placeRepository.findByNameEndsWith("남");
+        List<Place> places = placeRepository.findByNameStartsWith("남");
 
         // then
         assertThat(places).containsExactly(
