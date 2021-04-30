@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.domain.place.domain;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Getter
 @Entity
+@EqualsAndHashCode
 public class Place {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_엔티티_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,9 +35,9 @@ class PlaceServiceTest {
     @Test
     void findByKeyword() {
         // given
-        Place 남산 = createPlace(1L, "남산", 37.5537747, 126.9722148);
-        Place 남포동 = createPlace(2L, "남포동", 35.0963437, 129.0287312);
-        Place 경복궁 = createPlace(3L, "경복궁", 37.5796212, 126.974847);
+        Place 남산 = 장소_엔티티_생성(1L, "남산", 37.5537747, 126.9722148);
+        Place 남포동 = 장소_엔티티_생성(2L, "남포동", 35.0963437, 129.0287312);
+        Place 경복궁 = 장소_엔티티_생성(3L, "경복궁", 37.5796212, 126.974847);
         when(placeRepository.save(any())).thenReturn(newArrayList(남산, 남포동, 경복궁));
 
         // when
@@ -47,15 +48,6 @@ class PlaceServiceTest {
                 createPlaceResponse(1L, "남산", 37.5537747, 126.9722148),
                 createPlaceResponse(2L, "남포동", 35.0963437, 129.0287312),
                 createPlaceResponse(3L, "경복궁", 37.5796212, 126.974847));
-    }
-
-    private Place createPlace(long placeId, String name, double lat, double lng) {
-        Place place = new Place();
-        setField(place, "id", placeId);
-        setField(place, "name", name);
-        setField(place, "lat", lat);
-        setField(place, "lng", lng);
-        return place;
     }
 
     private PlaceResponse createPlaceResponse(long placeId, String name, double lat, double lng) {
