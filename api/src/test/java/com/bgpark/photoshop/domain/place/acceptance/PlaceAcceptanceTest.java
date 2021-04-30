@@ -2,13 +2,17 @@ package com.bgpark.photoshop.domain.place.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.place.dto.PlaceRequest;
+import com.bgpark.photoshop.domain.place.dto.PlaceResponse;
 import io.restassured.RestAssured;
+import io.restassured.mapper.TypeRef;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 import static com.bgpark.photoshop.domain.place.step.PlaceStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,6 +55,9 @@ public class PlaceAcceptanceTest extends AcceptanceTest {
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.as(new TypeRef<List<PlaceResponse>>() {})).containsExactly( // JsonPath: https://github.com/json-path/JsonPath#what-is-returned-when
+                장소_응답_생성(1L, "남산", 37.5537747, 126.9722148),
+                장소_응답_생성(2L, "남포동", 35.0963437,129.0287312));
     }
 
     private void 장소_저장_됨(ExtractableResponse<Response> response) {

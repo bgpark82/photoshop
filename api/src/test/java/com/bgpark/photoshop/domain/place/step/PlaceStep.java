@@ -38,4 +38,13 @@ public class PlaceStep {
         setField(place, "lng", lng);
         return place;
     }
+
+    public static PlaceResponse 장소_응답_생성(long placeId, String name, double lat, double lng) {
+        PlaceResponse response = new PlaceResponse();
+        setField(response, "id", placeId);
+        setField(response, "name", name);
+        setField(response, "lat", lat);
+        setField(response, "lng", lng);
+        return response;
+    }
 }

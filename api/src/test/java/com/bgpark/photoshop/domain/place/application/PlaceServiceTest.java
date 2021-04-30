@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_엔티티_생성;
+import static com.bgpark.photoshop.domain.place.step.PlaceStep.장소_응답_생성;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
 import static org.mockito.Mockito.when;
@@ -45,16 +46,7 @@ class PlaceServiceTest {
 
         // then
         assertThat(response).containsExactly(
-                createPlaceResponse(1L, "남산", 37.5537747, 126.9722148),
-                createPlaceResponse(2L, "남포동", 35.0963437, 129.0287312));
-    }
-
-    private PlaceResponse createPlaceResponse(long placeId, String name, double lat, double lng) {
-        PlaceResponse response = new PlaceResponse();
-        setField(response, "id", placeId);
-        setField(response, "name", name);
-        setField(response, "lat", lat);
-        setField(response, "lng", lng);
-        return response;
+                장소_응답_생성(1L, "남산", 37.5537747, 126.9722148),
+                장소_응답_생성(2L, "남포동", 35.0963437, 129.0287312));
     }
 }

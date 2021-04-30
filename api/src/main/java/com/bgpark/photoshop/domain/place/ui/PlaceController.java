@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/places")
@@ -27,7 +28,8 @@ public class PlaceController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PlaceResponse> findByKeyword(@RequestParam String keyword) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<PlaceResponse>> findByKeyword(@RequestParam String keyword) {
+        List<PlaceResponse> places = placeService.findByKeyword(keyword);
+        return ResponseEntity.ok().body(places);
     }
 }
