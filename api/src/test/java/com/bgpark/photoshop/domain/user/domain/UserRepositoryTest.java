@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("사용자 관련 Repository 테스트")
+@DisplayName("사용자 관련 데이터베이스 테스트")
 @DataJpaTest
 @Transactional
 class UserRepositoryTest {

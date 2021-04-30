@@ -17,7 +17,7 @@ import static com.bgpark.photoshop.domain.item.step.PictureStep.사진;
 import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장되어_있음;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 
-@DisplayName("주문 관련 인수테스트")
+@DisplayName("주문 관련 인수 테스트")
 public class OrdersAcceptanceTest extends AcceptanceTest {
 
     Long userId, pictureId1, pictureId2, pictureId3;

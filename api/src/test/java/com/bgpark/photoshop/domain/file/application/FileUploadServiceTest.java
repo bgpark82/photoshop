@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@DisplayName("File Upload 서비스 관련 테스트")
+@DisplayName("파일 업로드 관련 서비스 테스트")
 public class FileUploadServiceTest {
 
     private FileUploadService fileUploadService;

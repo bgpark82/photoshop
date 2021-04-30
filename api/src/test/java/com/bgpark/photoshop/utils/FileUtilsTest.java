@@ -12,7 +12,7 @@ import java.io.IOException;
 import static com.bgpark.photoshop.domain.file.step.FileStep.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("FileUtils 관련 테스트")
+@DisplayName("파일 유틸 관련 테스트")
 class FileUtilsTest {
 
     private MockMultipartFile 이미지;

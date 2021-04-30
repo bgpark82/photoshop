@@ -35,7 +35,7 @@ public class ItineraryAcceptanceTest extends AcceptanceTest {
         서울여행 = 일정_저장("서울여행", 남산_일정, 경복궁_일정);
     }
 
-    @DisplayName("새로운 일정을 생선한다")
+    @DisplayName("새로운 일정을 생성한다")
     @Test
     void save() {
         // when
@@ -46,7 +46,7 @@ public class ItineraryAcceptanceTest extends AcceptanceTest {
     }
 
     private void 일정_저장_됨(ExtractableResponse<Response> response) {
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.statusCode()). isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.header("location")).isEqualTo("/itinerary/1");
         assertThat(response.as(ItineraryResponse.class).getSchedules()).containsExactly(
                 ScheduleResponse.create(1L, 1),

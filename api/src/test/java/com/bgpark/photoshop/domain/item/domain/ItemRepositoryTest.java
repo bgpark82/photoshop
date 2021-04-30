@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
-@DisplayName("아이템 관련 Repository 테스트")
+@DisplayName("아이템 관련 데이터베이스 테스트")
 @DataJpaTest
 @MockBean(JpaConfig.class) // 설정을 Mock으로 추가할 수 있었다
 class ItemRepositoryTest {
