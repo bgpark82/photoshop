@@ -13,8 +13,8 @@ public class Itinerary {
     private Long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Schedule> schedules;
+    @Embedded
+    private Schedules schedules = new Schedules();
 
     public static Itinerary create(String name) {
         Itinerary itinerary = new Itinerary();
@@ -23,6 +23,10 @@ public class Itinerary {
     }
 
     public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
+        this.schedules.setSchedules(schedules);
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules.getSchedules();
     }
 }
