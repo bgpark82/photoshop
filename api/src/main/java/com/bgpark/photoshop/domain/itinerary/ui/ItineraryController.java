@@ -2,6 +2,7 @@ package com.bgpark.photoshop.domain.itinerary.ui;
 
 import com.bgpark.photoshop.domain.itinerary.application.ItineraryService;
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryRequest;
+import com.bgpark.photoshop.domain.itinerary.dto.ItineraryResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,9 @@ public class ItineraryController {
 
     @PostMapping
     public ResponseEntity save(@RequestBody ItineraryRequest request) {
-        itineraryService.save(request);
-        return ResponseEntity.created(URI.create("/itinerary/1")).build();
+        ItineraryResponse itinerary = itineraryService.save(request);
+        return ResponseEntity
+                .created(URI.create("/itinerary/1"))
+                .body(itinerary);
     }
 }

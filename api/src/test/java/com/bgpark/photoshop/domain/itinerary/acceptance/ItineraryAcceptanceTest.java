@@ -2,6 +2,8 @@ package com.bgpark.photoshop.domain.itinerary.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryRequest;
+import com.bgpark.photoshop.domain.itinerary.dto.ItineraryResponse;
+import com.bgpark.photoshop.domain.itinerary.dto.ScheduleResponse;
 import com.bgpark.photoshop.domain.place.dto.PlaceResponse;
 import com.bgpark.photoshop.domain.place.dto.ScheduleRequest;
 import io.restassured.response.ExtractableResponse;
@@ -46,5 +48,8 @@ public class ItineraryAcceptanceTest extends AcceptanceTest {
     private void 일정_저장_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.header("location")).isEqualTo("/itinerary/1");
+        assertThat(response.as(ItineraryResponse.class).getSchedules()).containsExactly(
+                ScheduleResponse.create(1L, 1),
+                ScheduleResponse.create(2L, 2));
     }
 }
