@@ -3,13 +3,16 @@ package com.bgpark.photoshop.domain.user.acceptance;
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.user.dto.AddressDto;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
+import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
@@ -43,10 +46,31 @@ public class UserAcceptanceTest extends AcceptanceTest {
         사용자_생성요청됨(response);
     }
 
+    @DisplayName("로그인을 한다")
+    @Test
+    void login() {
+        // given
+        String email = "bgpark82@gmail.com";
+        String password = "password";
+        HashMap<String, String> map = new HashMap<>();
+        map.put("email", email);
+        map.put("password", password);
+
+        // when
+        ExtractableResponse<Response> response = RestAssured
+                .given().log().all()
+                .body(map)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().post("/api/v1/login")
+                .then().log().all().extract();
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.cookie("JSESSIONID")).isNotNull();
+    }
+
     private void 사용자_생성요청됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.body().as(UserDto.Res.class).getId()).isEqualTo(1L);
     }
-
-
 }
