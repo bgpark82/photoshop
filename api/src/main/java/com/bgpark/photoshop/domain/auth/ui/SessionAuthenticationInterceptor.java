@@ -1,4 +1,4 @@
-package com.bgpark.photoshop.domain.auth;
+package com.bgpark.photoshop.domain.auth.ui;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 
