@@ -3,7 +3,10 @@ package com.bgpark.photoshop.domain.user.application;
 import com.bgpark.photoshop.domain.auth.application.AuthenticationConverter;
 import com.bgpark.photoshop.domain.auth.application.AuthenticationToken;
 import com.bgpark.photoshop.domain.auth.application.SessionAuthenticationConverter;
+import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
 import com.bgpark.photoshop.domain.auth.ui.SessionAuthenticationInterceptor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 @DisplayName("세션 인터셉터 관련 테스트")
 public class SessionAuthenticationInterceptorTest {
+
+    private static final String EMAIL = "bgpark82@gmail.com";
+    private static final String PASSWORD = "password";
 
     SessionAuthenticationInterceptor interceptor;
     MockHttpServletRequest request;
@@ -23,11 +30,18 @@ public class SessionAuthenticationInterceptorTest {
     AuthenticationConverter converter;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws JsonProcessingException {
         interceptor = new SessionAuthenticationInterceptor();
-        request = new MockHttpServletRequest();
+        request = createMockRequest();
         response = new MockHttpServletResponse();
         converter = new SessionAuthenticationConverter();
+    }
+
+    private MockHttpServletRequest createMockRequest() throws JsonProcessingException {
+        MockHttpServletRequest servletRequest = new MockHttpServletRequest();
+        AuthRequest request = AuthRequest.create(EMAIL, PASSWORD);
+        servletRequest.setContent(new ObjectMapper().writeValueAsBytes(request));
+        return servletRequest;
     }
 
     @DisplayName("로그인 요청을 받아 session에 사용자 정보를 담고 응답한다")
@@ -40,21 +54,15 @@ public class SessionAuthenticationInterceptorTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.SC_OK); // filter를 타지않고 요청을 보냈기 때문에 JSESSIONID는 가지지 않는다
     }
 
-    @DisplayName("Username, Password를 받아 AuthenticationToken을 생성한다")
+    @DisplayName("Username, Password을 받아 AuthenticationToken을 생성한다")
     @Test
-    void convertAuthenticationToken() {
-        // given
-        String username = "bgpark82@gmail.com";
-        String password = "password";
-        request.setParameter("username",username);
-        request.setParameter("password",password);
-
+    void convertAuthenticationToken() throws IOException {
         // when
         AuthenticationToken token = converter.convert(request);
 
         // then
-        assertThat(token.getPrincipal()).isEqualTo(username);
-        assertThat(token.getCredential()).isEqualTo(password);
+        assertThat(token.getPrincipal()).isEqualTo(EMAIL);
+        assertThat(token.getCredential()).isEqualTo(PASSWORD);
     }
 
     @DisplayName("AuthenticationToken으로 회원가입된 사용자인지 확인 후, Authentication을 생성한다")
