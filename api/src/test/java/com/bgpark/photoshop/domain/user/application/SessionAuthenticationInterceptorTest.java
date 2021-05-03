@@ -9,8 +9,6 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -80,9 +78,20 @@ public class SessionAuthenticationInterceptorTest {
         assertThat(((UserDetails)authentication.getPrincipal()).getPrincipal()).isEqualTo(EMAIL);
     }
 
-    @DisplayName("Authentication으로 SecurityContext에 만들어 Session에 담는다")
+    @DisplayName("Authentication으로 SecurityContext를 만들어 Session에 담는다")
     @Test
-    void setSecurityContext() {
+    void setSecurityContext() throws IOException {
+        // given
+        AuthenticationToken token = converter.convert(request);
+        when(detailsService.loadByUsername(any())).thenReturn(createUserDetails());
+        Authentication authentication = interceptor.authenticate(token);
+
+        // when
+        interceptor.store(request, authentication);
+
+        // then
+        assertThat(((SecurityContext)request.getSession().getAttribute("SECURITY_CONTEXT")).getAuthentication())
+                .isEqualTo(authentication);
     }
 
     private UserDetails createUserDetails() {

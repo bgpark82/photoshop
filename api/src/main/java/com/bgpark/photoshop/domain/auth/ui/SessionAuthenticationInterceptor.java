@@ -6,6 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //https://soon-devblog.tistory.com/2
 @RequiredArgsConstructor
@@ -29,5 +30,10 @@ public class SessionAuthenticationInterceptor implements HandlerInterceptor {
         String email = token.getPrincipal();
         UserDetails userDetails = userDetailsService.loadByUsername(email);
         return new Authentication(userDetails);
+    }
+
+    public void store(HttpServletRequest request, Authentication authentication) {
+        HttpSession session = request.getSession();
+        session.setAttribute("SECURITY_CONTEXT", new SecurityContext(authentication));
     }
 }
