@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 
 public class UserStep {
 
-    public static UserDto.Req 사용자(String name, AddressDto.SaveReq homeAddressReq, AddressDto.SaveReq workAddressReq, Set<String> favoritesReq) {
+    public static UserDto.Req 사용자(String name, String email, String password, AddressDto.SaveReq homeAddressReq, AddressDto.SaveReq workAddressReq, Set<String> favoritesReq) {
         return UserDto.Req
                 .builder()
+                .email(email)
+                .password(password)
                 .homeAddress(homeAddressReq)
                 .workAddress(workAddressReq)
                 .favorites(favoritesReq)

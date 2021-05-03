@@ -19,12 +19,16 @@ public class UserDto {
     @NoArgsConstructor
     public static class Req {
         private String name;
+        private String email;
+        private String password;
         private AddressDto.SaveReq homeAddress;
         private AddressDto.SaveReq workAddress;
         private Set<String> favorites;
 
         public User toEntity() {
             return User.builder()
+                    .email(email)
+                    .password(password)
                     .homeAddress(homeAddress.toEntity())
                     .workAddress(workAddress.toEntity())
                     .favorites(favorites)
@@ -38,15 +42,19 @@ public class UserDto {
     public static class Res {
         private Long id;
         private String name;
+        private String email;
+        private String password;
         private Address homeAddress;
         private Address workAddress;
         private Set<String> favorites;
         private List<Address> homeAddressHistory;
 
         @Builder
-        private Res(Long id, String name, Address homeAddress, Address workAddress, Set<String> favorites, List<Address> homeAddressHistory) {
+        private Res(Long id, String name, String email, String password, Address homeAddress, Address workAddress, Set<String> favorites, List<Address> homeAddressHistory) {
             this.id = id;
             this.name = name;
+            this.email = email;
+            this.password = password;
             this.homeAddress = homeAddress;
             this.workAddress = workAddress;
             this.favorites = favorites;
@@ -55,6 +63,8 @@ public class UserDto {
 
         public static Res of(User user){
             return Res.builder()
+                    .email(user.getEmail())
+                    .password(user.getPassword())
                     .favorites(user.getFavorites())
                     .homeAddress(user.getHomeAddress())
                     .workAddress(user.getWorkAddress())

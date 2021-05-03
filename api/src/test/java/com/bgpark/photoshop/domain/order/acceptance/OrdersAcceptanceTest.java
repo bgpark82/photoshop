@@ -30,7 +30,7 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         AddressDto.SaveReq 집주소 = 사용자_집주소("서울", "서초구", "201", 12345);
         AddressDto.SaveReq 회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);
 
-        userId = 사용자_생성요청되었음(사용자("박병길", 집주소, 회사주소, 관심분야));
+        userId = 사용자_생성요청되었음(사용자("박병길", "bgpark82@gmail.com", "password", 집주소, 회사주소, 관심분야));
         pictureId1 = 사진_저장되어_있음(사진("bgpark", "http://naver.com", "random", 1000, 100));
         pictureId2 = 사진_저장되어_있음(사진("kassie", "http://google.com", "winter", 15000, 10));
         pictureId3 = 사진_저장되어_있음(사진("peter", "http://google.com", "fall", 24000, 90));

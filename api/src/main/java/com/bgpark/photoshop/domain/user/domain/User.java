@@ -18,6 +18,10 @@ public class User {
 
     private String name;
 
+    private String email;
+
+    private String password;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
@@ -58,8 +62,10 @@ public class User {
     }
 
     @Builder
-    public User(String name, Address homeAddress, Address workAddress, Set<String> favorites) {
+    public User(String name, String email, String password, Address homeAddress, Address workAddress, Set<String> favorites) {
         this.name = name;
+        this.email = email;
+        this.password = password;
         this.homeAddress = homeAddress;
         this.workAddress = workAddress;
         this.favorites = favorites;
