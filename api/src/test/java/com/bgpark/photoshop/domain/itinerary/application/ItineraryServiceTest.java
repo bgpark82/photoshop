@@ -3,6 +3,7 @@ package com.bgpark.photoshop.domain.itinerary.application;
 import com.bgpark.photoshop.domain.itinerary.domain.Itinerary;
 import com.bgpark.photoshop.domain.itinerary.domain.ItineraryRepository;
 import com.bgpark.photoshop.domain.itinerary.domain.Schedule;
+import com.bgpark.photoshop.domain.itinerary.domain.Schedules;
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryRequest;
 import com.bgpark.photoshop.domain.itinerary.dto.ItineraryResponse;
 import com.bgpark.photoshop.domain.itinerary.dto.ScheduleResponse;
@@ -59,10 +60,13 @@ class ItineraryServiceTest {
                         ScheduleResponse.create(2L, 2));
     }
 
-    private Itinerary createItinerary(String name, Schedule... schedules) {
+    private Itinerary createItinerary(String name, Schedule... scheduleList) {
+        Schedules schedules = new Schedules();
+        setField(schedules, "schedules", Lists.newArrayList(scheduleList));
+
         Itinerary itinerary = new Itinerary();
         setField(itinerary, "name", name);
-        setField(itinerary, "schedules", Lists.newArrayList(schedules));
+        setField(itinerary, "schedules",  schedules);
         return itinerary;
     }
 

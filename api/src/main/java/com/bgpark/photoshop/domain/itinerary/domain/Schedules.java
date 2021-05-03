@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -17,6 +16,6 @@ public class Schedules {
     private List<Schedule> schedules = new ArrayList<>();
 
     public void setSchedules(List<Schedule> schedules) {
-        this.schedules = Collections.unmodifiableList(schedules);
+        this.schedules = schedules;
     }
 }
