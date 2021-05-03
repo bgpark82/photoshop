@@ -1,8 +1,6 @@
 package com.bgpark.photoshop.domain.user.application;
 
-import com.bgpark.photoshop.domain.auth.application.AuthenticationConverter;
-import com.bgpark.photoshop.domain.auth.application.AuthenticationToken;
-import com.bgpark.photoshop.domain.auth.application.SessionAuthenticationConverter;
+import com.bgpark.photoshop.domain.auth.application.*;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
 import com.bgpark.photoshop.domain.auth.ui.SessionAuthenticationInterceptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,8 +58,15 @@ public class SessionAuthenticationInterceptorTest {
 
     @DisplayName("AuthenticationToken으로 회원가입된 사용자인지 확인 후, Authentication을 생성한다")
     @Test
-    void authenticate() {
+    void authenticate() throws IOException {
+        // given
+        AuthenticationToken token = converter.convert(request);
 
+        // when
+        Authentication authentication = interceptor.authenticate(token);
+
+        // then
+        assertThat((UserDetails)authentication.getPrincipal()).isEqualTo(EMAIL);
     }
 
     @DisplayName("Authentication으로 SecurityContext에 만들어 Session에 담는다")

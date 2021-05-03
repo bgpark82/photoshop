@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.domain.auth.ui;
 
+import com.bgpark.photoshop.domain.auth.application.Authentication;
 import com.bgpark.photoshop.domain.auth.application.AuthenticationConverter;
 import com.bgpark.photoshop.domain.auth.application.AuthenticationToken;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +23,9 @@ public class SessionAuthenticationInterceptor implements HandlerInterceptor {
         request.getSession().setAttribute("email", email);
         response.setStatus(HttpServletResponse.SC_OK);
         return false;
+    }
+
+    public Authentication authenticate(AuthenticationToken token) {
+        return new Authentication();
     }
 }
