@@ -6,4 +6,9 @@ import lombok.Getter;
 public class Authentication {
 
     private Object principal;
+
+
+    public Authentication(Object principal) {
+        this.principal = principal;
+    }
 }

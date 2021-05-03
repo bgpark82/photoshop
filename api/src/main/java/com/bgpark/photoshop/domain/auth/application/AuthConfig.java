@@ -11,9 +11,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class AuthConfig implements WebMvcConfigurer {
 
     private final AuthenticationConverter converter;
+    private final UserDetailsService detailsService;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionAuthenticationInterceptor(converter)).addPathPatterns("/api/v1/login");
+        registry.addInterceptor(new SessionAuthenticationInterceptor(converter, detailsService)).addPathPatterns("/api/v1/login");
     }
 }

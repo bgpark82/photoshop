@@ -22,4 +22,9 @@ public class UserRepository {
         User user = em.find(User.class, id);
         return Optional.of(user);
     }
+
+    public Optional<User> findByEmail(String email) {
+        User user = em.find(User.class, email);
+        return Optional.of(user);
+    }
 }
