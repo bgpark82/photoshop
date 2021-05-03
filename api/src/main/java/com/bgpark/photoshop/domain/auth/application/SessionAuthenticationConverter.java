@@ -2,11 +2,13 @@ package com.bgpark.photoshop.domain.auth.application;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
+@Component
 public class SessionAuthenticationConverter implements AuthenticationConverter{
 
     private static final String EMAIL = "username";

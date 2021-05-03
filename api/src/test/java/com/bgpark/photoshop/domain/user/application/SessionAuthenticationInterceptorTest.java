@@ -31,17 +31,10 @@ public class SessionAuthenticationInterceptorTest {
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        interceptor = new SessionAuthenticationInterceptor();
+        converter = new SessionAuthenticationConverter();
+        interceptor = new SessionAuthenticationInterceptor(converter);
         request = createMockRequest();
         response = new MockHttpServletResponse();
-        converter = new SessionAuthenticationConverter();
-    }
-
-    private MockHttpServletRequest createMockRequest() throws JsonProcessingException {
-        MockHttpServletRequest servletRequest = new MockHttpServletRequest();
-        AuthRequest request = AuthRequest.create(EMAIL, PASSWORD);
-        servletRequest.setContent(new ObjectMapper().writeValueAsBytes(request));
-        return servletRequest;
     }
 
     @DisplayName("로그인 요청을 받아 session에 사용자 정보를 담고 응답한다")
@@ -74,5 +67,12 @@ public class SessionAuthenticationInterceptorTest {
     @DisplayName("Authentication으로 SecurityContext에 만들어 Session에 담는다")
     @Test
     void setSecurityContext() {
+    }
+
+    private MockHttpServletRequest createMockRequest() throws JsonProcessingException {
+        MockHttpServletRequest servletRequest = new MockHttpServletRequest();
+        AuthRequest request = AuthRequest.create(EMAIL, PASSWORD);
+        servletRequest.setContent(new ObjectMapper().writeValueAsBytes(request));
+        return servletRequest;
     }
 }
