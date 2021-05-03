@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import java.util.Set;
 
@@ -39,17 +38,9 @@ public class UserAcceptanceTest extends AcceptanceTest {
         UserDto.Req request = 사용자(이름, 이메일, 비밀번호, 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
 
         // when
-        ExtractableResponse<Response> response = 사용자_생성요청(request);
+        ExtractableResponse<Response> response = 사용자_생성_요청(request);
 
         // then
         사용자_생성_됨(response);
-    }
-
-    private void 사용자_생성_됨(ExtractableResponse<Response> response) {
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.body().as(UserDto.Res.class).getId()).isEqualTo(1L);
-        assertThat(response.body().as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
-        assertThat(response.body().as(UserDto.Res.class).getPassword()).isEqualTo("password");
-
     }
 }

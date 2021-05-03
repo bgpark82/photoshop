@@ -16,7 +16,7 @@ public class AuthStep {
         assertThat(response.cookie("JSESSIONID")).isNotNull();
     }
 
-    public static AuthRequest 로그인_생성(String email, String password) {
+    public static AuthRequest 로그인_정보_생성(String email, String password) {
         return AuthRequest.create(email, password);
     }
 

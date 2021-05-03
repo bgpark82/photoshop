@@ -26,11 +26,14 @@ public class UserDto {
         private Set<String> favorites;
 
         public User toEntity() {
+            Address homeAddress = this.homeAddress == null ? null : this.homeAddress.toEntity();
+            Address workAddress = this.homeAddress == null ? null : this.workAddress.toEntity();
+
             return User.builder()
                     .email(email)
                     .password(password)
-                    .homeAddress(homeAddress.toEntity())
-                    .workAddress(workAddress.toEntity())
+                    .homeAddress(homeAddress)
+                    .workAddress(workAddress)
                     .favorites(favorites)
                     .name(name)
                     .build();

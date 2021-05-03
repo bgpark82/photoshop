@@ -5,11 +5,14 @@ import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserStep {
 
@@ -51,10 +54,10 @@ public class UserStep {
     }
 
     public static Long 사용자_생성요청되었음(UserDto.Req request) {
-        return 사용자_생성요청(request).as(UserDto.Res.class).getId();
+        return 사용자_생성_요청(request).as(UserDto.Res.class).getId();
     }
 
-    public static ExtractableResponse<Response> 사용자_생성요청(UserDto.Req request) {
+    public static ExtractableResponse<Response> 사용자_생성_요청(UserDto.Req request) {
         return RestAssured
                 .given().log().all()
                 .body(request)
@@ -62,5 +65,16 @@ public class UserStep {
                 .when()
                 .post("/api/v1/users")
                 .then().log().all().extract();
+    }
+
+    public static UserDto.Res 사용자_생성되어_있음(UserDto.Req request) {
+        return 사용자_생성_요청(request).as(UserDto.Res.class);
+    }
+
+    public static void 사용자_생성_됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertThat(response.body().as(UserDto.Res.class).getId()).isEqualTo(1L);
+        assertThat(response.body().as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
+        assertThat(response.body().as(UserDto.Res.class).getPassword()).isEqualTo("password");
     }
 }
