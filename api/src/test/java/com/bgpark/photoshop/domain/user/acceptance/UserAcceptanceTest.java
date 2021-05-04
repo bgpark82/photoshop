@@ -53,19 +53,21 @@ public class UserAcceptanceTest extends AcceptanceTest {
 
     @DisplayName("사용자 정보를 조회한다")
     @Test
-    void findMe() {
+    void findUser() {
         // given
         사용자_생성되어_있음(사용자);
-        String cookie = 로그인_되어_있음(로그인_정보);
+        String 쿠키 = 로그인_되어_있음(로그인_정보);
 
         // when
         ExtractableResponse<Response> response = RestAssured
                 .given().log().all()
-                .cookie("JSESSIONID", cookie)
+                .cookie("JSESSIONID", 쿠키)
                 .when().get("/api/v1/users/me")
                 .then().log().all().extract();
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.as(UserDto.Res.class).getEmail()).isEqualTo(이메일);
+        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo(이름);
     }
 }
