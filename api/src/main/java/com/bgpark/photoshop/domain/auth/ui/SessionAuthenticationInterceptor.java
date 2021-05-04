@@ -1,6 +1,9 @@
 package com.bgpark.photoshop.domain.auth.ui;
 
 import com.bgpark.photoshop.domain.auth.application.*;
+import com.bgpark.photoshop.domain.auth.application.converter.AuthenticationConverter;
+import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.application.details.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,23 +20,21 @@ public class SessionAuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        AuthenticationToken authenticationToken = converter.convert(request);
-        Authentication authenticate = authenticate(authenticationToken);
-        UserDetails principal = (UserDetails) authenticate.getPrincipal();
-
-        request.getSession().setAttribute("email", principal.getPrincipal());
+        final AuthenticationToken authenticationToken = converter.convert(request);
+        final Authentication authentication = authenticate(authenticationToken);
+        store(request, authentication);
         response.setStatus(HttpServletResponse.SC_OK);
         return false;
     }
 
     public Authentication authenticate(AuthenticationToken token) {
-        String email = token.getPrincipal();
-        UserDetails userDetails = userDetailsService.loadByUsername(email);
+        final String email = token.getPrincipal();
+        final UserDetails userDetails = userDetailsService.loadByUsername(email);
         return new Authentication(userDetails);
     }
 
     public void store(HttpServletRequest request, Authentication authentication) {
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         session.setAttribute("SECURITY_CONTEXT", new SecurityContext(authentication));
     }
 }

@@ -1,8 +1,11 @@
-package com.bgpark.photoshop.domain.user.application;
+package com.bgpark.photoshop.domain.auth.ui;
 
 import com.bgpark.photoshop.domain.auth.application.*;
+import com.bgpark.photoshop.domain.auth.application.converter.AuthenticationConverter;
+import com.bgpark.photoshop.domain.auth.application.converter.SessionAuthenticationConverter;
+import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.application.details.UserDetailsService;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
-import com.bgpark.photoshop.domain.auth.ui.SessionAuthenticationInterceptor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
@@ -83,7 +86,6 @@ public class SessionAuthenticationInterceptorTest {
     void setSecurityContext() throws IOException {
         // given
         AuthenticationToken token = converter.convert(request);
-        when(detailsService.loadByUsername(any())).thenReturn(createUserDetails());
         Authentication authentication = interceptor.authenticate(token);
 
         // when

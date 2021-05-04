@@ -1,5 +1,6 @@
-package com.bgpark.photoshop.domain.auth.application;
+package com.bgpark.photoshop.domain.auth.application.converter;
 
+import com.bgpark.photoshop.domain.auth.application.AuthenticationToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Component
-public class SessionAuthenticationConverter implements AuthenticationConverter{
+public class SessionAuthenticationConverter implements AuthenticationConverter {
 
     private static final String EMAIL = "username";
     private static final String PASSWORD = "password";

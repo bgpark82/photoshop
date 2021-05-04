@@ -1,5 +1,6 @@
-package com.bgpark.photoshop.domain.auth.application;
+package com.bgpark.photoshop.domain.auth.application.details;
 
+import com.bgpark.photoshop.domain.auth.application.UserDetails;
 import com.bgpark.photoshop.domain.user.domain.User;
 import com.bgpark.photoshop.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
