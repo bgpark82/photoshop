@@ -1,9 +1,9 @@
 package com.bgpark.photoshop.domain.order.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
-import com.bgpark.photoshop.domain.user.dto.AddressDto;
 import com.bgpark.photoshop.domain.order.dto.OrderDto;
 import com.bgpark.photoshop.domain.order.dto.OrderItemDto;
+import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,23 +12,24 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.bgpark.photoshop.domain.order.step.OrderStep.*;
-import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_생성;
 import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장되어_있음;
+import static com.bgpark.photoshop.domain.order.step.OrderStep.*;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 
 @DisplayName("주문 관련 인수 테스트")
 public class OrdersAcceptanceTest extends AcceptanceTest {
 
+    Set<String> 관심분야;
+    AddressRequest 집주소, 회사주소;
     Long userId, pictureId1, pictureId2, pictureId3;
     OrderItemDto.Req 아이템_주문1, 아이템_주문2, 아이템_주문3;
 
     @BeforeEach
     void setUp() throws Exception {
         super.beforeEach();
-        Set<String> 관심분야 = 사용자_관심분야("landscape", "portrait");
-        AddressDto.SaveReq 집주소 = 사용자_집주소("서울", "서초구", "201", 12345);
-        AddressDto.SaveReq 회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);
+        관심분야 = 사용자_관심분야("landscape", "portrait");
+        집주소 = 사용자_집주소("서울", "서초구", "201", 12345);
+        회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);
 
         userId = 사용자_생성요청되었음(사용자("박병길", "bgpark82@gmail.com", "password", 집주소, 회사주소, 관심분야));
         pictureId1 = 사진_저장되어_있음("bgpark", "http://naver.com", "random", 1000, 100).getId();

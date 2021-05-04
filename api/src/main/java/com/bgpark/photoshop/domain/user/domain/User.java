@@ -50,7 +50,7 @@ public class User {
     private List<Address> homeAddressHistory = new ArrayList<>();
 
     public void updateHomeAddress(String city, String street, String detail, int zipcode) {
-        final Address homeAddress = Address.builder()
+        final Address homeAddress = Address.entityBuilder()
                 .city(city)
                 .street(street)
                 .detail(detail)

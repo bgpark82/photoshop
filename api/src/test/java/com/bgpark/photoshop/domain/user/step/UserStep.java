@@ -1,6 +1,6 @@
 package com.bgpark.photoshop.domain.user.step;
 
-import com.bgpark.photoshop.domain.user.dto.AddressDto;
+import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserStep {
 
-    public static UserDto.Req 사용자(String name, String email, String password, AddressDto.SaveReq homeAddressReq, AddressDto.SaveReq workAddressReq, Set<String> favoritesReq) {
+    public static UserDto.Req 사용자(String name, String email, String password, AddressRequest homeAddressReq, AddressRequest workAddressReq, Set<String> favoritesReq) {
         return UserDto.Req
                 .builder()
                 .email(email)
@@ -33,24 +33,12 @@ public class UserStep {
                 .collect(Collectors.toSet());
     }
 
-    public static AddressDto.SaveReq 사용자_회사주소(String city, String street, String detail, int zipcode) {
-        return AddressDto.SaveReq
-                .builder()
-                .city(city)
-                .street(street)
-                .detail(detail)
-                .zipcode(zipcode)
-                .build();
+    public static AddressRequest 사용자_회사주소(String city, String street, String detail, int zipcode) {
+        return AddressRequest.create(city, street, detail, zipcode);
     }
 
-    public static AddressDto.SaveReq 사용자_집주소(String city, String street, String detail, int zipcode) {
-        return AddressDto.SaveReq
-                .builder()
-                .city(city)
-                .street(street)
-                .detail(detail)
-                .zipcode(zipcode)
-                .build();
+    public static AddressRequest 사용자_집주소(String city, String street, String detail, int zipcode) {
+        return AddressRequest.create(city, street, detail, zipcode);
     }
 
     public static Long 사용자_생성요청되었음(UserDto.Req request) {

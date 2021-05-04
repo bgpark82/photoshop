@@ -2,7 +2,7 @@ package com.bgpark.photoshop.domain.user.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
-import com.bgpark.photoshop.domain.user.dto.AddressDto;
+import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -18,7 +18,7 @@ import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 @DisplayName("사용자 관련 인수 테스트")
 public class UserAcceptanceTest extends AcceptanceTest {
 
-    AddressDto.SaveReq 사용자_집주소, 사용자_회사주소;
+    AddressRequest 사용자_집주소, 사용자_회사주소;
     Set<String> 사용자_관심분야;
     String 이름, 이메일, 비밀번호;
     UserDto.Req 사용자;

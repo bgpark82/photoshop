@@ -21,8 +21,8 @@ public class UserDto {
         private String name;
         private String email;
         private String password;
-        private AddressDto.SaveReq homeAddress;
-        private AddressDto.SaveReq workAddress;
+        private AddressRequest homeAddress;
+        private AddressRequest workAddress;
         private Set<String> favorites;
 
         public User toEntity() {

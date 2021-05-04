@@ -157,7 +157,7 @@ class UserRepositoryTest {
         em.flush();
         em.clear();
 
-        Address newAddress = Address.builder()
+        Address newAddress = Address.entityBuilder()
                 .city("서울시")
                 .street("가산동")
                 .detail("백화점단지")
@@ -181,7 +181,7 @@ class UserRepositoryTest {
     }
 
     private Address createWorkAddress() {
-        return Address.builder()
+        return Address.entityBuilder()
                 .city("서울시")
                 .street("가산동")
                 .detail("롯데백화점")
@@ -190,7 +190,7 @@ class UserRepositoryTest {
     }
 
     private Address createHomeAddress() {
-        return Address.builder()
+        return Address.entityBuilder()
                 .city("서울시")
                 .street("서초대로")
                 .detail("201")
