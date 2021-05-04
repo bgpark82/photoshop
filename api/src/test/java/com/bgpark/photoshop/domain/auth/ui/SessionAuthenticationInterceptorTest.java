@@ -56,6 +56,7 @@ public class SessionAuthenticationInterceptorTest {
         // then
         assertThat(response.getStatus()).isEqualTo(HttpStatus.SC_OK); // filter를 타지않고 요청을 보냈기 때문에 JSESSIONID는 가지지 않는다
     }
+
     @DisplayName("Username, Password을 받아 AuthenticationToken을 생성한다")
     @Test
     void convertAuthenticationToken() throws IOException {

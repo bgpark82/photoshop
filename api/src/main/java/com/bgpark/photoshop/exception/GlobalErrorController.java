@@ -13,4 +13,9 @@ public class GlobalErrorController {
         return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseBody
+    public ResponseEntity userNotFoundException(UserNotFoundException e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }

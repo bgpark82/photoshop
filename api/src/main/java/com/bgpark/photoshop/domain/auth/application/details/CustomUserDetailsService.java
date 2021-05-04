@@ -3,6 +3,7 @@ package com.bgpark.photoshop.domain.auth.application.details;
 import com.bgpark.photoshop.domain.auth.application.UserDetails;
 import com.bgpark.photoshop.domain.user.domain.User;
 import com.bgpark.photoshop.domain.user.domain.UserRepository;
+import com.bgpark.photoshop.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadByUsername(String username) {
         User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new RuntimeException("사용자가 존재하지 않습니다"));
+                .orElseThrow(() -> new UserNotFoundException());
         return UserDetails.of(user.getId(), user.getEmail(), user.getPassword());
     }
 }
