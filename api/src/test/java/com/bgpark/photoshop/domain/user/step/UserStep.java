@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.domain.user.step;
 
 import com.bgpark.photoshop.domain.user.dto.AddressRequest;
-import com.bgpark.photoshop.domain.user.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.UserRequest;
 import com.bgpark.photoshop.domain.user.dto.UserResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -17,16 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserStep {
 
-    public static UserDto.Req 사용자(String name, String email, String password, AddressRequest homeAddressReq, AddressRequest workAddressReq, Set<String> favoritesReq) {
-        return UserDto.Req
-                .builder()
-                .email(email)
-                .password(password)
-                .homeAddress(homeAddressReq)
-                .workAddress(workAddressReq)
-                .favorites(favoritesReq)
-                .name(name)
-                .build();
+    public static UserRequest 사용자(String name, String email, String password, AddressRequest homeAddressReq, AddressRequest workAddressReq, Set<String> favoritesReq) {
+        return UserRequest.create(name, email, password, homeAddressReq, workAddressReq, favoritesReq);
     }
 
     public static Set<String> 사용자_관심분야(String ...favorite) {
@@ -42,11 +34,11 @@ public class UserStep {
         return AddressRequest.create(city, street, detail, zipcode);
     }
 
-    public static UserResponse 사용자_생성되어_었음(UserDto.Req request) {
+    public static UserResponse 사용자_생성되어_었음(UserRequest request) {
         return 사용자_생성_요청(request).as(UserResponse.class);
     }
 
-    public static ExtractableResponse<Response> 사용자_생성_요청(UserDto.Req request) {
+    public static ExtractableResponse<Response> 사용자_생성_요청(UserRequest request) {
         return RestAssured
                 .given().log().all()
                 .body(request)
@@ -56,21 +48,21 @@ public class UserStep {
                 .then().log().all().extract();
     }
 
-    public static UserDto.Res 사용자_생성되어_있음(UserDto.Req request) {
-        return 사용자_생성_요청(request).as(UserDto.Res.class);
+    public static UserResponse 사용자_생성되어_있음(UserRequest request) {
+        return 사용자_생성_요청(request).as(UserResponse.class);
     }
 
     public static void 사용자_생성_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.body().as(UserDto.Res.class).getId()).isEqualTo(1L);
-        assertThat(response.body().as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
-        assertThat(response.body().as(UserDto.Res.class).getPassword()).isEqualTo("password");
+        assertThat(response.body().as(UserResponse.class).getId()).isEqualTo(1L);
+        assertThat(response.body().as(UserResponse.class).getEmail()).isEqualTo("bgpark82@gmail.com");
+        assertThat(response.body().as(UserResponse.class).getPassword()).isEqualTo("password");
     }
 
     public static void 사용자_조회_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
-        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo("박병길");
+        assertThat(response.as(UserResponse.class).getEmail()).isEqualTo("bgpark82@gmail.com");
+        assertThat(response.as(UserResponse.class).getName()).isEqualTo("박병길");
     }
 
     public static ExtractableResponse<Response> 사용자_조회_요청(String cookie) {

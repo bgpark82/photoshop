@@ -17,106 +17,117 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("사용자 관련 데이터베이스 테스트")
 @DataJpaTest
-@Transactional
 class UserRepositoryTest {
 
     @Autowired
     private EntityManager em;
 
+    @DisplayName("회원가입을 한다")
     @Test
-    void 회원가입() {
-        User user = User.builder()
+    void signUp() {
+        // given
+        User user = User.entityBuilder()
                 .name("박병길")
                 .build();
 
+        // when
         em.persist(user);
 
+        // then
         assertThat(user.getName()).isEqualTo("박병길");
     }
 
+    @DisplayName("회원가입 시, 집 주소를 추가한다")
     @Test
-    void 회원가입_집주소추가() {
+    void signUpAddHomeAddress() {
+        // given
         Address homeAddress = createHomeAddress();
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .homeAddress(homeAddress)
                 .build();
 
+        // when
         em.persist(user);
 
-        System.out.println(user);
+        // then
         assertThat(user.getHomeAddress().getCity()).isEqualTo("서울시");
         assertThat(user.getWorkAddress()).isNull();
     }
 
-
-
+    @DisplayName("회원가입 시, 회사 주소를 추가한다")
     @Test
-    void 회원가입_회사주소추가() {
+    void signUpAddWorkAddress() {
+        // given
         Address workAddress = createWorkAddress();
-
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .workAddress(workAddress)
                 .build();
 
+        //when
         em.persist(user);
 
-        System.out.println(user);
+        // then
         assertThat(user.getWorkAddress().getStreet()).isEqualTo("가산동");
         assertThat(user.getHomeAddress()).isNull();
     }
 
 
-
+    @DisplayName("회원가입 시, 좋아하는 사진을 추가한다")
     @Test
-    void 회원가입_좋아하는사진추가() {
+    void signUpAddFavorites() {
+        // given
         HashSet<String> favorites = createFavorites();
-
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .favorites(favorites)
                 .build();
 
+        // when
         em.persist(user);
 
-        System.out.println(user);
+        // then
         assertThat(user.getFavorites()).contains("portrait");
     }
 
-
-
+    @DisplayName("회원가입 시, 집 주소 히스토리를 확인한다")
     @Test
-    void 회원가입_주소히스토리() {
+    void signUpCheckHomeAddressHistory() {
+        // given
         Address homeAddress = createHomeAddress();
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .homeAddress(homeAddress)
                 .build();
 
+        // when
         em.persist(user);
 
         user.updateHomeAddress("김해시","동상동","아파트",111);
-
         em.flush();
         em.clear();
 
         user.getFavorites();
 
+        // then
         assertThat(user.getHomeAddress().getCity()).isEqualTo("김해시");
     }
 
+    @DisplayName("회원의 집 주소 히스토리를 확인한다")
     @Test
-    void 회원조회_주소히스토리() {
+    void findHomeAddressHistory() {
+        // given
         HashSet<String> favorites = createFavorites();
         Address homeAddress = createHomeAddress();
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .favorites(favorites)
                 .homeAddress(homeAddress)
                 .build();
-        em.persist(user);
 
+        // when
+        em.persist(user);
         em.flush();
         em.clear();
 
@@ -127,10 +138,12 @@ class UserRepositoryTest {
         assertThat(find.getFavorites()).contains("portrait");
     }
 
+    @DisplayName("회원의 좋아하는 사진을 변경한다")
     @Test
-    void 회원변경_좋아하는사진변경() {
+    void updateFavorites() {
+        // given
         HashSet<String> favorites = createFavorites();
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .favorites(favorites)
                 .build();
@@ -138,25 +151,30 @@ class UserRepositoryTest {
         em.flush();
         em.clear();
 
+        // when
         user.switchFavorites("portrait","wallpaper");
 
+        // then
         assertThat(user.getFavorites().contains("portrait")).isFalse();
         assertThat(user.getFavorites().contains("wallpaper")).isTrue();
     }
 
-
+    @DisplayName("회원의 주소 히스토리를 변경한다")
     @Test
-    void 회원변경_주소히스토리변경() {
+    void updateHomeAddressHistory() {
+        // given
         Address homeAddress = createHomeAddress();
-        User user = User.builder()
+        User user = User.entityBuilder()
                 .name("박병길")
                 .homeAddress(homeAddress)
                 .build();
-        em.persist(user);
 
+        // when
+        em.persist(user);
         em.flush();
         em.clear();
 
+        // given
         Address newAddress = Address.entityBuilder()
                 .city("서울시")
                 .street("가산동")
@@ -164,12 +182,12 @@ class UserRepositoryTest {
                 .zipcode(12345)
                 .build();
 
+        // when
         user.switchAddress(homeAddress, newAddress);
-
         em.flush();
         em.clear();
 
-        System.out.println(user);
+        // then
         assertThat(user.getHomeAddressHistory().contains(homeAddress)).isFalse();
         assertThat(user.getHomeAddressHistory().contains(newAddress)).isTrue();
     }

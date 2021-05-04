@@ -61,7 +61,7 @@ public class User {
         this.homeAddressHistory.add(homeAddress);
     }
 
-    @Builder
+    @Builder(builderMethodName = "entityBuilder")
     public User(String name, String email, String password, Address homeAddress, Address workAddress, Set<String> favorites) {
         this.name = name;
         this.email = email;

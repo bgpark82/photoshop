@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.domain.order.dto;
 
 import com.bgpark.photoshop.domain.order.domain.Orders;
-import com.bgpark.photoshop.domain.user.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.UserResponse;
 import lombok.Getter;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class OrderResponse {
 
     private Long id;
-    private UserDto.Res user;
+    private UserResponse user;
     private List<OrderItemResponse> orderItems;
     private DeliveryResponse delivery;
 
@@ -21,7 +21,7 @@ public class OrderResponse {
                 .map(OrderItemResponse::create)
                 .collect(Collectors.toList());
 
-        UserDto.Res user = UserDto.Res.of(order.getUser());
+        UserResponse user = UserResponse.of(order.getUser());
 
         DeliveryResponse delivery = DeliveryResponse.create(order.getDelivery());
 

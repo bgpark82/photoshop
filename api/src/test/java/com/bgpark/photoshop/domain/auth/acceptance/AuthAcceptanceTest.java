@@ -2,7 +2,7 @@ package com.bgpark.photoshop.domain.auth.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
-import com.bgpark.photoshop.domain.user.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.UserRequest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,8 +37,8 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         로그인_요청_됨(response);
     }
 
-    public UserDto.Req 사용자_생성(String name, String email, String password) {
-        UserDto.Req request = new UserDto.Req();
+    public UserRequest 사용자_생성(String name, String email, String password) {
+        UserRequest request = new UserRequest();
         ReflectionTestUtils.setField(request, "name", name);
         ReflectionTestUtils.setField(request, "email", email);
         ReflectionTestUtils.setField(request, "password", password);

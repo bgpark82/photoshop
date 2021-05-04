@@ -3,7 +3,8 @@ package com.bgpark.photoshop.domain.user.ui;
 import com.bgpark.photoshop.domain.auth.domain.Principal;
 import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.user.application.UserService;
-import com.bgpark.photoshop.domain.user.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.UserRequest;
+import com.bgpark.photoshop.domain.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserDto.Res> save(@RequestBody UserDto.Req request) {
-        UserDto.Res response = userService.save(request);
+    public ResponseEntity<UserResponse> save(@RequestBody UserRequest request) {
+        UserResponse response = userService.save(request);
         return ResponseEntity
                 .created(URI.create(String.format("/user/%d",response.getId())))
                 .body(response);
@@ -27,7 +28,7 @@ public class UserController {
 
     @GetMapping("/users/me")
     public ResponseEntity findMe(@Principal UserDetails userDetails) {
-        UserDto.Res user = userService.findUser(userDetails.getPrincipal());
+        UserResponse user = userService.findUser(userDetails.getPrincipal());
         return ResponseEntity.ok().body(user);
     }
 }
