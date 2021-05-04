@@ -24,7 +24,10 @@ public class UserRepository {
     }
 
     public Optional<User> findByEmail(String email) {
-        User user = em.find(User.class, email);
+        User user = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
+                .setParameter("email", email)
+                .getSingleResult();
+
         return Optional.of(user);
     }
 }
