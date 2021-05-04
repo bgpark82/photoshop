@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.bgpark.photoshop.domain.auth.application.SecurityContextHolder.SECURITY_CONTEXT_KEY;
+
 //https://soon-devblog.tistory.com/2
 @RequiredArgsConstructor
 public class SessionAuthenticationInterceptor implements HandlerInterceptor {
@@ -37,6 +39,6 @@ public class SessionAuthenticationInterceptor implements HandlerInterceptor {
 
     public void store(HttpServletRequest request, Authentication authentication) {
         final HttpSession session = request.getSession();
-        session.setAttribute("SECURITY_CONTEXT", new SecurityContext(authentication));
+        session.setAttribute(SECURITY_CONTEXT_KEY, new SecurityContext(authentication));
     }
 }

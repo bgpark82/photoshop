@@ -20,6 +20,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.io.IOException;
 
+import static com.bgpark.photoshop.domain.auth.application.SecurityContextHolder.SECURITY_CONTEXT_KEY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -95,7 +96,7 @@ public class SessionAuthenticationInterceptorTest {
         interceptor.store(request, authentication);
 
         // then
-        assertThat(((SecurityContext)request.getSession().getAttribute("SECURITY_CONTEXT")).getAuthentication())
+        assertThat(((SecurityContext)request.getSession().getAttribute(SECURITY_CONTEXT_KEY)).getAuthentication())
                 .isEqualTo(authentication);
     }
 

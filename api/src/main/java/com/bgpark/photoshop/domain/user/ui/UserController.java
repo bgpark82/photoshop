@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.domain.user.ui;
 
+import com.bgpark.photoshop.domain.auth.application.SecurityContextHolder;
 import com.bgpark.photoshop.domain.auth.domain.SecurityContext;
 import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.user.application.UserService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
+
+import static com.bgpark.photoshop.domain.auth.application.SecurityContextHolder.SECURITY_CONTEXT_KEY;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,14 +32,12 @@ public class UserController {
 
     @GetMapping("/users/me")
     public ResponseEntity findMe(HttpServletRequest request) {
-        UserDetails userDetails = getUserDetails(request);
+        UserDetails userDetails = getUserDetails();
         UserDto.Res user = userService.findUser(userDetails.getPrincipal());
         return ResponseEntity.ok().body(user);
     }
 
-    private UserDetails getUserDetails(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        SecurityContext context = (SecurityContext) session.getAttribute("SECURITY_CONTEXT");
-        return (UserDetails) context.getAuthentication().getPrincipal();
+    private UserDetails getUserDetails() {
+        return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
