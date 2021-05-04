@@ -1,13 +1,13 @@
 package com.bgpark.photoshop.domain.order.application;
 
+import com.bgpark.photoshop.domain.item.domain.Item;
+import com.bgpark.photoshop.domain.item.domain.ItemRepository;
 import com.bgpark.photoshop.domain.order.domain.Delivery;
 import com.bgpark.photoshop.domain.order.domain.OrderItem;
 import com.bgpark.photoshop.domain.order.domain.OrderRepository;
 import com.bgpark.photoshop.domain.order.domain.Orders;
-import com.bgpark.photoshop.domain.user.domain.User;
-import com.bgpark.photoshop.domain.item.domain.Item;
 import com.bgpark.photoshop.domain.order.dto.OrderDto;
-import com.bgpark.photoshop.domain.item.domain.ItemRepository;
+import com.bgpark.photoshop.domain.user.domain.User;
 import com.bgpark.photoshop.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.bgpark.photoshop.domain.order.dto.OrderItemDto.*;
+import static com.bgpark.photoshop.domain.order.dto.OrderItemDto.Req;
 
 @Service
 @RequiredArgsConstructor

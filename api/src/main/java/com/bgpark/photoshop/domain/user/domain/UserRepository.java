@@ -1,33 +1,12 @@
 package com.bgpark.photoshop.domain.user.domain;
 
-import com.bgpark.photoshop.domain.user.domain.User;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
 import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-public class UserRepository {
+public interface UserRepository {
 
-    private final EntityManager em;
+    User save(User user);
 
-    public User save(User user) {
-        em.persist(user);
-        return user;
-    }
+    Optional<User> findById(Long id);
 
-    public Optional<User> findById(Long id) {
-        User user = em.find(User.class, id);
-        return Optional.of(user);
-    }
-
-    public Optional<User> findByEmail(String email) {
-        User user = (User) em.createQuery("SELECT u FROM User u WHERE u.email = :email")
-                .setParameter("email", email)
-                .getSingleResult();
-
-        return Optional.of(user);
-    }
+    Optional<User> findByEmail(String email);
 }
