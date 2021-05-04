@@ -13,7 +13,7 @@ public class OrderResponse {
     private Long id;
     private UserDto.Res user;
     private List<OrderItemResponse> orderItems;
-    private DeliveryDto.Res delivery;
+    private DeliveryResponse delivery;
 
     public static OrderResponse create(Orders order) {
         List<OrderItemResponse> orderItems = order
@@ -23,7 +23,7 @@ public class OrderResponse {
 
         UserDto.Res user = UserDto.Res.of(order.getUser());
 
-        DeliveryDto.Res delivery = DeliveryDto.Res.of(order.getDelivery());
+        DeliveryResponse delivery = DeliveryResponse.create(order.getDelivery());
 
         OrderResponse response = new OrderResponse();
         response.id = order.getId();
