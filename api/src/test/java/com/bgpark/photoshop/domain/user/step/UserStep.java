@@ -81,7 +81,7 @@ public class UserStep {
     public static void 사용자_조회_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
-        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo("password");
+        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo("박병길");
     }
 
     public static ExtractableResponse<Response> 사용자_조회_요청(String cookie) {

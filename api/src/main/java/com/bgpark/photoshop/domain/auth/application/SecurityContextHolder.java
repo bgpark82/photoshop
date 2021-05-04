@@ -18,6 +18,15 @@ public class SecurityContextHolder {
     }
 
     public static SecurityContext getContext() {
-        return contextHolder.get();
+        SecurityContext context = contextHolder.get();
+        if (context == null) {
+            context = createEmptyContext();
+            contextHolder.set(context);
+        }
+        return context;
+    }
+
+    private static SecurityContext createEmptyContext() {
+        return new SecurityContext();
     }
 }

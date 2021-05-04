@@ -28,7 +28,6 @@ public class SessionSecurityContextInterceptor implements HandlerInterceptor {
     }
 
     private boolean hasAuthentication() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        return context.getAuthentication() != null;
+        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 }
