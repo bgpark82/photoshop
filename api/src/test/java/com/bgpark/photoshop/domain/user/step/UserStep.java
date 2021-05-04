@@ -77,4 +77,18 @@ public class UserStep {
         assertThat(response.body().as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
         assertThat(response.body().as(UserDto.Res.class).getPassword()).isEqualTo("password");
     }
+
+    public static void 사용자_조회_됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.as(UserDto.Res.class).getEmail()).isEqualTo("bgpark82@gmail.com");
+        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo("password");
+    }
+
+    public static ExtractableResponse<Response> 사용자_조회_요청(String cookie) {
+        return RestAssured
+                .given().log().all()
+                .cookie("JSESSIONID", cookie)
+                .when().get("/api/v1/users/me")
+                .then().log().all().extract();
+    }
 }

@@ -4,20 +4,16 @@ import com.bgpark.photoshop.common.AcceptanceTest;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
 import com.bgpark.photoshop.domain.user.dto.AddressDto;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
-import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 
 import java.util.Set;
 
-import static com.bgpark.photoshop.domain.auth.step.AuthStep.로그인_되어_있음;
-import static com.bgpark.photoshop.domain.auth.step.AuthStep.로그인_정보_생성;
+import static com.bgpark.photoshop.domain.auth.step.AuthStep.*;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("사용자 관련 인수 테스트")
 public class UserAcceptanceTest extends AcceptanceTest {
@@ -37,6 +33,7 @@ public class UserAcceptanceTest extends AcceptanceTest {
         사용자_집주소 = 사용자_집주소("서울", "가산동", "롯데백화점", 2468);
         사용자_회사주소 = 사용자_회사주소("서울", "가산동", "롯데백화점", 2468);
         사용자_관심분야 = 사용자_관심분야("portrait", "landscape");
+
         사용자 = 사용자(이름, 이메일, 비밀번호, 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
         로그인_정보 = 로그인_정보_생성(이메일, 비밀번호);
     }
@@ -59,15 +56,9 @@ public class UserAcceptanceTest extends AcceptanceTest {
         String 쿠키 = 로그인_되어_있음(로그인_정보);
 
         // when
-        ExtractableResponse<Response> response = RestAssured
-                .given().log().all()
-                .cookie("JSESSIONID", 쿠키)
-                .when().get("/api/v1/users/me")
-                .then().log().all().extract();
+        ExtractableResponse<Response> response = 사용자_조회_요청(쿠키);
 
         // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.as(UserDto.Res.class).getEmail()).isEqualTo(이메일);
-        assertThat(response.as(UserDto.Res.class).getName()).isEqualTo(이름);
+        사용자_조회_됨(response);
     }
 }
