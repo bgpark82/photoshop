@@ -28,4 +28,8 @@ public class AuthStep {
                 .when().post("/api/v1/login")
                 .then().log().all().extract();
     }
+
+    public static String 로그인_되어_있음(AuthRequest auth) {
+        return 로그인_요청(auth).cookie("JSESSIONID");
+    }
 }
