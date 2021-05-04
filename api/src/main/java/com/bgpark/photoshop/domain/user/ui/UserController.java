@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.domain.user.ui;
 
-import com.bgpark.photoshop.domain.auth.application.SecurityContext;
-import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.domain.SecurityContext;
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.user.application.UserService;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;

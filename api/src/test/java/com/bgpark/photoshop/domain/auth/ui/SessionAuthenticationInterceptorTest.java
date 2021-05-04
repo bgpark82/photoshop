@@ -1,10 +1,12 @@
 package com.bgpark.photoshop.domain.auth.ui;
 
-import com.bgpark.photoshop.domain.auth.application.*;
 import com.bgpark.photoshop.domain.auth.application.converter.AuthenticationConverter;
 import com.bgpark.photoshop.domain.auth.application.converter.SessionAuthenticationConverter;
-import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.domain.SecurityContext;
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.auth.application.details.UserDetailsService;
+import com.bgpark.photoshop.domain.auth.domain.Authentication;
+import com.bgpark.photoshop.domain.auth.domain.AuthenticationToken;
 import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

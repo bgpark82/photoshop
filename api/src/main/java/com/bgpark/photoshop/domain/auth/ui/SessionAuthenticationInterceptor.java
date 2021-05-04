@@ -1,9 +1,11 @@
 package com.bgpark.photoshop.domain.auth.ui;
 
-import com.bgpark.photoshop.domain.auth.application.*;
 import com.bgpark.photoshop.domain.auth.application.converter.AuthenticationConverter;
-import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.domain.SecurityContext;
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.auth.application.details.UserDetailsService;
+import com.bgpark.photoshop.domain.auth.domain.Authentication;
+import com.bgpark.photoshop.domain.auth.domain.AuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.HandlerInterceptor;
 

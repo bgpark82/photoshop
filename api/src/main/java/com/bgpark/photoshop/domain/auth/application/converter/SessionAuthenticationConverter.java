@@ -1,6 +1,6 @@
 package com.bgpark.photoshop.domain.auth.application.converter;
 
-import com.bgpark.photoshop.domain.auth.application.AuthenticationToken;
+import com.bgpark.photoshop.domain.auth.domain.AuthenticationToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.CharStreams;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.bgpark.photoshop.domain.auth.application.details;
 
-import com.bgpark.photoshop.domain.auth.application.UserDetails;
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.user.domain.User;
 import com.bgpark.photoshop.domain.user.domain.UserRepository;
 import com.bgpark.photoshop.exception.UserNotFoundException;

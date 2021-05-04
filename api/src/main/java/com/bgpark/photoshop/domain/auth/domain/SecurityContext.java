@@ -1,5 +1,6 @@
-package com.bgpark.photoshop.domain.auth.application;
+package com.bgpark.photoshop.domain.auth.domain;
 
+import com.bgpark.photoshop.domain.auth.domain.Authentication;
 import lombok.Getter;
 
 @Getter
