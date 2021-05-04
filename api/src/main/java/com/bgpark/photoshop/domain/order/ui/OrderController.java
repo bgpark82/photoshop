@@ -1,7 +1,8 @@
 package com.bgpark.photoshop.domain.order.ui;
 
 import com.bgpark.photoshop.domain.order.application.OrderService;
-import com.bgpark.photoshop.domain.order.dto.OrderDto;
+import com.bgpark.photoshop.domain.order.dto.OrderRequest;
+import com.bgpark.photoshop.domain.order.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/orders")
-    public ResponseEntity save(@RequestBody OrderDto.Req request) {
-        OrderDto.Res response = orderService.save(request);
+    public ResponseEntity save(@RequestBody OrderRequest request) {
+        OrderResponse response = orderService.save(request);
 
         return ResponseEntity
                 .created(URI.create(String.format("/order/%d", response.getId())))
@@ -27,11 +28,8 @@ public class OrderController {
 
     @GetMapping("/orders")
     public ResponseEntity getAll() {
-        List<OrderDto.Res> orders = orderService.findAll();
+        List<OrderResponse> orders = orderService.findAll();
 
         return ResponseEntity.ok().body(orders);
     }
-
-
-
 }

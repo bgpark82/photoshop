@@ -2,6 +2,7 @@ package com.bgpark.photoshop.domain.user.step;
 
 import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import com.bgpark.photoshop.domain.user.dto.UserDto;
+import com.bgpark.photoshop.domain.user.dto.UserResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -41,8 +42,8 @@ public class UserStep {
         return AddressRequest.create(city, street, detail, zipcode);
     }
 
-    public static Long 사용자_생성요청되었음(UserDto.Req request) {
-        return 사용자_생성_요청(request).as(UserDto.Res.class).getId();
+    public static UserResponse 사용자_생성되어_었음(UserDto.Req request) {
+        return 사용자_생성_요청(request).as(UserResponse.class);
     }
 
     public static ExtractableResponse<Response> 사용자_생성_요청(UserDto.Req request) {

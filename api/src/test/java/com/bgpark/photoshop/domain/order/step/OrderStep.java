@@ -1,7 +1,10 @@
 package com.bgpark.photoshop.domain.order.step;
 
+import com.bgpark.photoshop.domain.item.dto.PictureResponse;
 import com.bgpark.photoshop.domain.order.domain.DeliveryStatus;
-import com.bgpark.photoshop.domain.order.dto.OrderDto;
+import com.bgpark.photoshop.domain.order.dto.OrderItemRequest;
+import com.bgpark.photoshop.domain.order.dto.OrderRequest;
+import com.bgpark.photoshop.domain.order.dto.OrderResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -12,9 +15,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderStep {
 
+    public static OrderItemRequest 사진_주문(PictureResponse picture, int count) {
+        return OrderItemRequest.create(picture.getId(), count);
+    }
+
     public static void 주문_조회됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        //assertThat(response.body().as(new TypeRef<OrderDto.Res>() {}).
     }
 
     public static ExtractableResponse<Response> 주문_조회_요청() {
@@ -26,13 +32,14 @@ public class OrderStep {
 
     public static void 주문_생성_요청됨(ExtractableResponse<Response> response, Long userId) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.body().as(OrderDto.Res.class).getUser().getId()).isEqualTo(userId);
-        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().size()).isEqualTo(2);
-        assertThat(response.body().as(OrderDto.Res.class).getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
-        assertThat(response.body().as(OrderDto.Res.class).getOrderItems().get(0).getItem().getStockQuantity()).isEqualTo(97);
+        assertThat(response.body().as(OrderResponse.class).getUser().getId()).isEqualTo(userId);
+        assertThat(response.body().as(OrderResponse.class).getOrderItems().size()).isEqualTo(2);
+        assertThat(response.body().as(OrderResponse.class).getDelivery().getStatus()).isEqualTo(DeliveryStatus.READY);
+        assertThat(response.body().as(OrderResponse.class).getOrderItems().get(0).getItem().getStockQuantity()).isEqualTo(97);
     }
 
-    public static ExtractableResponse<Response> 주문_생성_요청(OrderDto.Req request) {
+    public static ExtractableResponse<Response> 주문_생성_요청(Long userId, OrderItemRequest... orderItems) {
+        OrderRequest request = OrderRequest.create(userId, orderItems);
         return RestAssured
                 .given().log().all()
                 .body(request)
@@ -41,7 +48,7 @@ public class OrderStep {
                 .then().log().all().extract();
     }
 
-    public static Long 주문_생성_요청_되어있음(OrderDto.Req request) {
-        return 주문_생성_요청(request).as(OrderDto.Res.class).getId();
+    public static Long 주문_생성되어_있음(Long userId, OrderItemRequest... orderItems) {
+        return 주문_생성_요청(userId, orderItems).as(OrderResponse.class).getId();
     }
 }
