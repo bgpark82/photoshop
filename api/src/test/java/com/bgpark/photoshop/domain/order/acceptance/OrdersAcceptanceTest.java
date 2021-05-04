@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 import static com.bgpark.photoshop.domain.order.step.OrderStep.*;
-import static com.bgpark.photoshop.domain.item.step.PictureStep.사진;
+import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_생성;
 import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장되어_있음;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 
@@ -31,9 +31,9 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         AddressDto.SaveReq 회사주소 = 사용자_회사주소("서울", "가산로", "롯데아울렛", 12345);
 
         userId = 사용자_생성요청되었음(사용자("박병길", "bgpark82@gmail.com", "password", 집주소, 회사주소, 관심분야));
-        pictureId1 = 사진_저장되어_있음(사진("bgpark", "http://naver.com", "random", 1000, 100));
-        pictureId2 = 사진_저장되어_있음(사진("kassie", "http://google.com", "winter", 15000, 10));
-        pictureId3 = 사진_저장되어_있음(사진("peter", "http://google.com", "fall", 24000, 90));
+        pictureId1 = 사진_저장되어_있음("bgpark", "http://naver.com", "random", 1000, 100).getId();
+        pictureId2 = 사진_저장되어_있음("kassie", "http://google.com", "winter", 15000, 10).getId();
+        pictureId3 = 사진_저장되어_있음("peter", "http://google.com", "fall", 24000, 90).getId();
         아이템_주문1 = new OrderItemDto.Req(pictureId1, 3);
         아이템_주문2 = new OrderItemDto.Req(pictureId2, 4);
         아이템_주문3 = new OrderItemDto.Req(pictureId3, 5);

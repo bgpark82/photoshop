@@ -67,7 +67,7 @@ class ItemRepositoryTest {
     }
 
     private Picture 사진_생성() {
-        return Picture.builder()
+        return Picture.entityBuilder()
                 .artist("박병길")
                 .name("설원")
                 .price(13000)

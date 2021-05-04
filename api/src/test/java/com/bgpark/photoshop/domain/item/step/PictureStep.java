@@ -1,7 +1,7 @@
 package com.bgpark.photoshop.domain.item.step;
 
-import com.bgpark.photoshop.domain.item.domain.Picture;
-import com.bgpark.photoshop.domain.order.dto.PictureDto;
+import com.bgpark.photoshop.domain.item.dto.PictureRequest;
+import com.bgpark.photoshop.domain.item.dto.PictureResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -12,32 +12,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PictureStep {
 
-    public static Picture 사진(String artist, String imageUrl, String name, int price, int stockQuantity) {
-        return Picture.builder()
-                .artist(artist)
-                .imageUrl(imageUrl)
-                .name(name)
-                .price(price)
-                .stockQuantity(stockQuantity)
-                .build();
+    public static PictureRequest 사진_생성(String artist, String imageUrl, String name, int price, int stockQuantity) {
+        return PictureRequest.create(name, price, stockQuantity, artist, imageUrl);
     }
 
-    public static Long 사진_저장되어_있음(Picture picture) {
+    public static PictureResponse 사진_저장되어_있음(String artist, String imageUrl, String name, int price, int stockQuantity) {
+        PictureRequest request = 사진_생성(artist, imageUrl, name, price, stockQuantity);
         return RestAssured
                 .given().log().all()
-                .body(picture)
+                .body(request)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .post("/api/v1/pictures")
                 .then().log().all().extract()
-                .as(PictureDto.Res.class)
-                .getId();
+                .as(PictureResponse.class);
     }
 
-    public static ExtractableResponse<Response> 사진_저장요청() {
+    public static ExtractableResponse<Response> 사진_저장_요청(String artist, String imageUrl, String name, int price, int stockQuantity) {
         return RestAssured
                 .given().log().all()
-                .body(사진("bgpark", "www.google.com", "nigh owl", 1000, 100))
+                .body(사진_생성(artist, imageUrl, name, price, stockQuantity))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
                 .post("/api/v1/pictures")
@@ -45,8 +39,12 @@ public class PictureStep {
     }
 
 
-    public static void 사진_저장요청됨(ExtractableResponse<Response> response) {
+    public static void 사진_저장요청_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-        assertThat(response.body().as(PictureDto.Res.class).getId()).isEqualTo(1L);
+        assertThat(response.body().as(PictureResponse.class).getId()).isEqualTo(1L);
+        assertThat(response.body().as(PictureResponse.class).getArtist()).isEqualTo("bgpark");
+        assertThat(response.body().as(PictureResponse.class).getImageUrl()).isEqualTo("www.google.com");
+        assertThat(response.body().as(PictureResponse.class).getName()).isEqualTo("night owl");
+        assertThat(response.body().as(PictureResponse.class).getPrice()).isEqualTo(1000);
     }
 }

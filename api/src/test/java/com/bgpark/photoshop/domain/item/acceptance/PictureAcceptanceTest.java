@@ -7,24 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장요청;
-import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장요청됨;
+import static com.bgpark.photoshop.domain.item.step.PictureStep.*;
 
 @DisplayName("사진 관련 인수테스트")
 class PictureAcceptanceTest extends AcceptanceTest {
-
-    @BeforeEach
-    void setUp() throws Exception {
-        super.beforeEach();
-    }
 
     @DisplayName("사진을 저장한다")
     @Test
     void save() {
         // when
-        ExtractableResponse<Response> response = 사진_저장요청();
+        ExtractableResponse<Response> response = 사진_저장_요청("bgpark", "www.google.com", "night owl", 1000, 100);
 
         // then
-        사진_저장요청됨(response);
+        사진_저장요청_됨(response);
     }
 }

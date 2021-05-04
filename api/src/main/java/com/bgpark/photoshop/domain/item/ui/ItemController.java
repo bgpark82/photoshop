@@ -3,7 +3,8 @@ package com.bgpark.photoshop.domain.item.ui;
 import com.bgpark.photoshop.domain.item.domain.Item;
 import com.bgpark.photoshop.domain.item.domain.ItemRepository;
 import com.bgpark.photoshop.domain.item.domain.Picture;
-import com.bgpark.photoshop.domain.order.dto.PictureDto;
+import com.bgpark.photoshop.domain.item.dto.PictureRequest;
+import com.bgpark.photoshop.domain.item.dto.PictureResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,9 @@ public class ItemController {
 
     @PostMapping("/pictures")
     @Transactional
-    public ResponseEntity<PictureDto.Res> save(@RequestBody PictureDto.Req request) {
+    public ResponseEntity<PictureResponse> save(@RequestBody PictureRequest request) {
         Item picture = itemRepository.save(request.toEntity());
-        PictureDto.Res response = PictureDto.Res.of((Picture) picture);
+        PictureResponse response = PictureResponse.of((Picture) picture);
         return ResponseEntity
                 .created(URI.create("/pictures/" + picture.getId()))
                 .body(response);
