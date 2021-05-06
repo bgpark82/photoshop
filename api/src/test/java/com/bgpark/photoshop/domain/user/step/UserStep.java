@@ -8,6 +8,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -19,6 +20,14 @@ public class UserStep {
 
     public static UserRequest 사용자(String name, String email, String password, AddressRequest homeAddressReq, AddressRequest workAddressReq, Set<String> favoritesReq) {
         return UserRequest.create(name, email, password, homeAddressReq, workAddressReq, favoritesReq);
+    }
+
+    public static UserRequest 사용자_생성(String name, String email, String password) {
+        UserRequest request = new UserRequest();
+        ReflectionTestUtils.setField(request, "name", name);
+        ReflectionTestUtils.setField(request, "email", email);
+        ReflectionTestUtils.setField(request, "password", password);
+        return request;
     }
 
     public static Set<String> 사용자_관심분야(String ...favorite) {

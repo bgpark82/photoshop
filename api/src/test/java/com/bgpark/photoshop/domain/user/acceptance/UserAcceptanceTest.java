@@ -1,7 +1,6 @@
 package com.bgpark.photoshop.domain.user.acceptance;
 
 import com.bgpark.photoshop.common.AcceptanceTest;
-import com.bgpark.photoshop.domain.auth.dto.AuthRequest;
 import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import com.bgpark.photoshop.domain.user.dto.UserRequest;
 import io.restassured.response.ExtractableResponse;
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static com.bgpark.photoshop.domain.auth.step.AuthStep.*;
+import static com.bgpark.photoshop.domain.auth.step.AuthStep.로그인_되어_있음;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
 
 @DisplayName("사용자 관련 인수 테스트")
@@ -22,7 +21,6 @@ public class UserAcceptanceTest extends AcceptanceTest {
     Set<String> 사용자_관심분야;
     String 이름, 이메일, 비밀번호;
     UserRequest 사용자;
-    AuthRequest 로그인_정보;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -35,7 +33,6 @@ public class UserAcceptanceTest extends AcceptanceTest {
         사용자_관심분야 = 사용자_관심분야("portrait", "landscape");
 
         사용자 = 사용자(이름, 이메일, 비밀번호, 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
-        로그인_정보 = 로그인_정보_생성(이메일, 비밀번호);
     }
 
     @DisplayName("사용자를 생성한다")
@@ -53,7 +50,7 @@ public class UserAcceptanceTest extends AcceptanceTest {
     void findUser() {
         // given
         사용자_생성되어_있음(사용자);
-        String 쿠키 = 로그인_되어_있음(로그인_정보);
+        String 쿠키 = 로그인_되어_있음(이메일, 비밀번호);
 
         // when
         ExtractableResponse<Response> response = 사용자_조회_요청(쿠키);

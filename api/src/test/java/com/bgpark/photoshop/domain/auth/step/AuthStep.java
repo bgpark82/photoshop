@@ -20,16 +20,17 @@ public class AuthStep {
         return AuthRequest.create(email, password);
     }
 
-    public static ExtractableResponse<Response> 로그인_요청(AuthRequest auth) {
+    public static ExtractableResponse<Response> 로그인_요청(String email, String password) {
+        AuthRequest request = 로그인_정보_생성(email, password);
         return RestAssured
                 .given().log().all()
-                .body(auth)
+                .body(request)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/api/v1/login")
                 .then().log().all().extract();
     }
 
-    public static String 로그인_되어_있음(AuthRequest auth) {
-        return 로그인_요청(auth).cookie("JSESSIONID");
+    public static String 로그인_되어_있음(String email, String password) {
+        return 로그인_요청(email, password).cookie("JSESSIONID");
     }
 }
