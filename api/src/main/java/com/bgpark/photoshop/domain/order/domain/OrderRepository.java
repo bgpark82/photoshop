@@ -7,4 +7,6 @@ public interface OrderRepository {
     Orders save(Orders order);
 
     List<Orders> findAll();
+
+    List<Orders> findAllById(Long id);
 }

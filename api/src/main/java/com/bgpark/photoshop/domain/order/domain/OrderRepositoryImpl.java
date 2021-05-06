@@ -28,4 +28,17 @@ public class OrderRepositoryImpl implements OrderRepository{
                 .setMaxResults(100)
                 .getResultList();
     }
+
+    @Override
+    public List<Orders> findAllById(Long id) {
+        return em.createQuery("SELECT o FROM Orders o " +
+                " join fetch o.user u" +
+                " join fetch o.delivery d" +
+                " where u.id = :id",
+                Orders.class)
+                .setParameter("id", id)
+                .setFirstResult(1)
+                .setMaxResults(100)
+                .getResultList();
+    }
 }

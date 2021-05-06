@@ -71,9 +71,9 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         주문_생성되어_있음(쿠키, 랜덤사진_주문, 겨울사진_주문);
 
         // when
-        ExtractableResponse<Response> response = 주문_조회_요청();
+        ExtractableResponse<Response> response = 주문_조회_요청(쿠키);
 
         // then
-        주문_조회됨(response);
+        주문_조회_됨(response);
     }
 }

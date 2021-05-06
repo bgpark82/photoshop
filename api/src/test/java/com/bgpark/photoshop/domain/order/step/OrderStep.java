@@ -15,18 +15,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OrderStep {
 
+    private static final String JSESSIONID = "JSESSIONID";
+    private static final String ORDER_URL = "/api/v1/orders";
+
     public static OrderItemRequest 사진_주문(PictureResponse picture, int count) {
         return OrderItemRequest.create(picture.getId(), count);
     }
 
-    public static void 주문_조회됨(ExtractableResponse<Response> response) {
+    public static void 주문_조회_됨(ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
-    public static ExtractableResponse<Response> 주문_조회_요청() {
+    public static ExtractableResponse<Response> 주문_조회_요청(String cookie) {
         return RestAssured
                 .given().log().all()
-                .when().get("/api/v1/orders")
+                .cookie(JSESSIONID, cookie)
+                .when().get(ORDER_URL)
                 .then().log().all().extract();
     }
 
@@ -42,10 +46,10 @@ public class OrderStep {
         OrderRequest request = OrderRequest.create(orderItems);
         return RestAssured
                 .given().log().all()
-                .cookie("JSESSIONID", cookie)
+                .cookie(JSESSIONID, cookie)
                 .body(request)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when().post("/api/v1/orders")
+                .when().post(ORDER_URL)
                 .then().log().all().extract();
     }
 
