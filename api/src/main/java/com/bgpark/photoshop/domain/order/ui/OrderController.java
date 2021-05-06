@@ -1,5 +1,7 @@
 package com.bgpark.photoshop.domain.order.ui;
 
+import com.bgpark.photoshop.domain.auth.domain.Principal;
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.order.application.OrderService;
 import com.bgpark.photoshop.domain.order.dto.OrderRequest;
 import com.bgpark.photoshop.domain.order.dto.OrderResponse;
@@ -18,8 +20,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/orders")
-    public ResponseEntity save(@RequestBody OrderRequest request) {
-        OrderResponse response = orderService.save(request);
+    public ResponseEntity save(@Principal UserDetails userDetails, @RequestBody OrderRequest request) {
+        OrderResponse response = orderService.save(userDetails, request);
 
         return ResponseEntity
                 .created(URI.create(String.format("/order/%d", response.getId())))
@@ -27,8 +29,8 @@ public class OrderController {
     }
 
     @GetMapping("/orders")
-    public ResponseEntity getAll() {
-        List<OrderResponse> orders = orderService.findAll();
+    public ResponseEntity getAll(@Principal UserDetails userDetails) {
+        List<OrderResponse> orders = orderService.findAll(userDetails);
 
         return ResponseEntity.ok().body(orders);
     }

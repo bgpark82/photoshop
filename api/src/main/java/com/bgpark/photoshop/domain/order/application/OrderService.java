@@ -1,5 +1,6 @@
 package com.bgpark.photoshop.domain.order.application;
 
+import com.bgpark.photoshop.domain.auth.domain.UserDetails;
 import com.bgpark.photoshop.domain.item.domain.Item;
 import com.bgpark.photoshop.domain.item.domain.ItemRepository;
 import com.bgpark.photoshop.domain.order.domain.Delivery;
@@ -27,8 +28,9 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
-    public OrderResponse save(OrderRequest request) {
-        User user = findUserById(request);
+    public OrderResponse save(UserDetails userDetails, OrderRequest request) {
+        User user = findUserById(userDetails.getId());
+
         List<OrderItem> orderItems = request.getOrderItems().stream()
                 .map(this::createOrderItem)
                 .collect(Collectors.toList());
@@ -48,7 +50,7 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<OrderResponse> findAll() {
+    public List<OrderResponse> findAll(UserDetails userDetails) {
         return orderRepository.findAll()
                 .stream()
                 .map(OrderResponse::create)
@@ -59,8 +61,8 @@ public class OrderService {
         return itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다"));
     }
 
-    private User findUserById(OrderRequest request) {
-        return userRepository.findById(request.getUserId()).get();
+    private User findUserById(Long userId) {
+        return userRepository.findById(userId).get();
     }
 
 

@@ -38,17 +38,18 @@ public class OrderStep {
         assertThat(response.body().as(OrderResponse.class).getOrderItems().get(0).getItem().getStockQuantity()).isEqualTo(97);
     }
 
-    public static ExtractableResponse<Response> 주문_생성_요청(Long userId, OrderItemRequest... orderItems) {
-        OrderRequest request = OrderRequest.create(userId, orderItems);
+    public static ExtractableResponse<Response> 주문_생성_요청(String cookie, OrderItemRequest... orderItems) {
+        OrderRequest request = OrderRequest.create(orderItems);
         return RestAssured
                 .given().log().all()
+                .cookie("JSESSIONID", cookie)
                 .body(request)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/api/v1/orders")
                 .then().log().all().extract();
     }
 
-    public static Long 주문_생성되어_있음(Long userId, OrderItemRequest... orderItems) {
-        return 주문_생성_요청(userId, orderItems).as(OrderResponse.class).getId();
+    public static Long 주문_생성되어_있음(String cookie, OrderItemRequest... orderItems) {
+        return 주문_생성_요청(cookie, orderItems).as(OrderResponse.class).getId();
     }
 }
