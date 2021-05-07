@@ -24,6 +24,7 @@ class UserDtoTest {
                 .getValidator();
     }
 
+    @DisplayName("유효한 이메일인지 체크한다")
     @Test
     void checkEmail() throws ClassNotFoundException {
         // given
@@ -41,6 +42,7 @@ class UserDtoTest {
     private UserRequest createRequest() {
         UserRequest request = new UserRequest();
         ReflectionTestUtils.setField(request, "email", "email");
+        ReflectionTestUtils.setField(request, "password", "password");
         return request;
     }
 }
