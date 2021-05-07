@@ -25,13 +25,11 @@ public class Delivery {
     @OneToOne(fetch = FetchType.LAZY)
     private Orders order;
 
-    private Delivery(Address address, DeliveryStatus status) {
-        this.address = address;
-        this.status = status;
-    }
-
     public static Delivery ready(Address address) {
-        return new Delivery(address, READY);
+        Delivery delivery = new Delivery();
+        delivery.address = address;
+        delivery.status = READY;
+        return delivery;
     }
 
     public void addOrder(Orders order) {

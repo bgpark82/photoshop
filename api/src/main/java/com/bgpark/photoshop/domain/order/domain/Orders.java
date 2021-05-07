@@ -44,16 +44,12 @@ public class Orders {
         delivery.addOrder(this);
     }
 
-    private void addUser(User user) {
-        this.user = user;
-    }
-
-    public static Orders create(User user, Delivery delivery, List<OrderItem> orderItems) {
+    public static Orders start(User user, Delivery delivery, List<OrderItem> orderItems) {
         // 기본 생성자를 이용하여 private set 메소드를 만드는 것이 생성자를 더럽히는(?) 것보다 나을듯하다
         Orders order = new Orders();
         order.addOrderItems(orderItems);
         order.startDelivery(delivery);
-        order.addUser(user);
+        order.user = user;
         return order;
     }
 }

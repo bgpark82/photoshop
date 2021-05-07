@@ -33,15 +33,14 @@ public class OrderItem {
 
     private int count;
 
-    private OrderItem(Item item, int orderPrice, int count) {
-        this.item = item;
-        this.orderPrice = orderPrice;
-        this.count = count;
-    }
-
     public static OrderItem create(Item item, int count) {
-        item.ready(count);
-        return new OrderItem(item, item.getPrice(), count);
+        item.decreaseStock(count);
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.item = item;
+        orderItem.orderPrice = item.getPrice();
+        orderItem.count = count;
+        return orderItem;
     }
 
     public void addOrder(Orders order) {

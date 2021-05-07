@@ -8,8 +8,10 @@ import com.bgpark.photoshop.domain.order.dto.OrderResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import org.assertj.core.util.Lists;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,7 +45,7 @@ public class OrderStep {
     }
 
     public static ExtractableResponse<Response> 주문_생성_요청(String cookie, OrderItemRequest... orderItems) {
-        OrderRequest request = OrderRequest.create(orderItems);
+        OrderRequest request = createOrderRequest(orderItems);
         return RestAssured
                 .given().log().all()
                 .cookie(JSESSIONID, cookie)
@@ -55,5 +57,11 @@ public class OrderStep {
 
     public static Long 주문_생성되어_있음(String cookie, OrderItemRequest... orderItems) {
         return 주문_생성_요청(cookie, orderItems).as(OrderResponse.class).getId();
+    }
+
+    private static OrderRequest createOrderRequest(OrderItemRequest... orderItems) {
+        OrderRequest request = new OrderRequest();
+        ReflectionTestUtils.setField(request,"orderItems", Lists.newArrayList(orderItems));
+        return request;
     }
 }

@@ -30,23 +30,13 @@ public class OrderService {
 
     public OrderResponse save(UserDetails userDetails, OrderRequest request) {
         User user = findUserById(userDetails.getId());
-
-        List<OrderItem> orderItems = request.getOrderItems().stream()
-                .map(this::createOrderItem)
-                .collect(Collectors.toList());
-
         Delivery delivery = Delivery.ready(user.getHomeAddress());
-        Orders order = Orders.create(user, delivery, orderItems);
+        List<OrderItem> orderItems = getOrderItems(request);
+        Orders order = Orders.start(user, delivery, orderItems);
 
         orderRepository.save(order);
 
         return OrderResponse.create(order);
-    }
-
-    private OrderItem createOrderItem(OrderItemRequest orderItem) {
-        return OrderItem.create(
-                findItemById(orderItem.getItemId()),
-                orderItem.getCount());
     }
 
     @Transactional(readOnly = true)
@@ -57,8 +47,16 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    private Item findItemById(Long itemId) {
-        return itemRepository.findById(itemId).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다"));
+    private List<OrderItem> getOrderItems(OrderRequest orderRequest) {
+        return orderRequest.getOrderItems().stream()
+                .map(orderItemRequest -> OrderItem.create(
+                        getItem(orderItemRequest),
+                        orderItemRequest.getCount()))
+                .collect(Collectors.toList());
+    }
+
+    private Item getItem(OrderItemRequest orderItemRequest) {
+        return itemRepository.findById(orderItemRequest.getItemId()).orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다"));
     }
 
     private User findUserById(Long userId) {

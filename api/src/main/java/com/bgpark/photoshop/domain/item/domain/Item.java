@@ -32,7 +32,7 @@ public abstract class Item extends BaseEntity {
         this.stockQuantity = stockQuantity;
     }
 
-    public void ready(int count){
+    public void decreaseStock(int count){
         final int restStock = stockQuantity - count;
         if(restStock < 0) {
             throw new IllegalArgumentException("수량이 부족합니다");
