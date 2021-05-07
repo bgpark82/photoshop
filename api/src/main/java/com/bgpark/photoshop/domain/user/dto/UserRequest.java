@@ -5,6 +5,7 @@ import com.bgpark.photoshop.domain.user.domain.User;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Getter
@@ -12,6 +13,7 @@ public class UserRequest {
 
     private String name;
     @Email
+    @NotEmpty(message = "이메일을 입력해주세요.")
     private String email;
     private String password;
     private AddressRequest homeAddress;

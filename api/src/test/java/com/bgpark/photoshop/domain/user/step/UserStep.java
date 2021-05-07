@@ -82,9 +82,9 @@ public class UserStep {
         assertThat(response.as(UserResponse.class).getEmail()).isEqualTo("bgpark82@gmail.com");
         assertThat(response.as(UserResponse.class).getName()).isEqualTo("박병길");
     }
-    public static void 사용자_생성_이메일_오류발생_됨(ExtractableResponse<Response> response) {
+    public static void 사용자_생성_이메일_오류발생_됨(ExtractableResponse<Response> response, String message) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-        assertThat(response.body().jsonPath().getString("errors[0].defaultMessage")).isEqualTo("이메일 주소가 유효하지 않습니다.");
+        assertThat(response.body().jsonPath().getString("errors[0].defaultMessage")).isEqualTo(message);
     }
 
 }
