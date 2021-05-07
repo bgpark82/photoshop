@@ -4,12 +4,14 @@ import com.bgpark.photoshop.domain.user.domain.Address;
 import com.bgpark.photoshop.domain.user.domain.User;
 import lombok.Getter;
 
+import javax.validation.constraints.Email;
 import java.util.Set;
 
 @Getter
 public class UserRequest {
 
     private String name;
+    @Email
     private String email;
     private String password;
     private AddressRequest homeAddress;
