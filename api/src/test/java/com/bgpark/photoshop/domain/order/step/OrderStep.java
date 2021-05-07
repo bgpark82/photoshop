@@ -36,7 +36,7 @@ public class OrderStep {
                 .then().log().all().extract();
     }
 
-    public static void 주문_생성_요청됨(ExtractableResponse<Response> response, Long userId) {
+    public static void 주문_생성요청_됨(ExtractableResponse<Response> response, Long userId) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         assertThat(response.body().as(OrderResponse.class).getUser().getId()).isEqualTo(userId);
         assertThat(response.body().as(OrderResponse.class).getOrderItems().size()).isEqualTo(2);
@@ -59,7 +59,7 @@ public class OrderStep {
         return 주문_생성_요청(cookie, orderItems).as(OrderResponse.class).getId();
     }
 
-    private static OrderRequest createOrderRequest(OrderItemRequest... orderItems) {
+    public static OrderRequest createOrderRequest(OrderItemRequest... orderItems) {
         OrderRequest request = new OrderRequest();
         ReflectionTestUtils.setField(request,"orderItems", Lists.newArrayList(orderItems));
         return request;

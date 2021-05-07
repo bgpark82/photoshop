@@ -1,15 +1,17 @@
-package com.bgpark.photoshop.domain.order.acceptance;
+package com.bgpark.photoshop.domain.order.documentation;
 
-import com.bgpark.photoshop.common.AcceptanceTest;
+import com.bgpark.photoshop.common.Documentation;
 import com.bgpark.photoshop.domain.item.dto.PictureResponse;
 import com.bgpark.photoshop.domain.order.dto.OrderItemRequest;
 import com.bgpark.photoshop.domain.user.dto.AddressRequest;
 import com.bgpark.photoshop.domain.user.dto.UserResponse;
+import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
 import java.util.Set;
 
@@ -17,9 +19,11 @@ import static com.bgpark.photoshop.domain.auth.step.AuthStep.로그인_되어_�
 import static com.bgpark.photoshop.domain.item.step.PictureStep.사진_저장되어_있음;
 import static com.bgpark.photoshop.domain.order.step.OrderStep.*;
 import static com.bgpark.photoshop.domain.user.step.UserStep.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.restassured3.RestAssuredRestDocumentation.document;
 
-@DisplayName("주문 관련 인수 테스트")
-public class OrdersAcceptanceTest extends AcceptanceTest {
+@DisplayName("주문 관련 문서테스트")
+public class OrderDocumentationTest extends Documentation {
 
     String 이름, 이메일, 비밀번호;
     Set<String> 관심분야;
@@ -30,7 +34,6 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        super.beforeEach();
         이름 = "박병길";
         이메일 = "bgpark82@gmail.com";
         비밀번호 = "password";
@@ -56,24 +59,19 @@ public class OrdersAcceptanceTest extends AcceptanceTest {
         String 쿠키 = 로그인_되어_있음(이메일, 비밀번호);
 
         // when
-        ExtractableResponse<Response> response = 주문_생성_요청(쿠키, 랜덤사진_주문, 겨울사진_주문);
+        ExtractableResponse<Response> response = RestAssured
+                .given(spec).log().all()
+                .filter(document("order",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())))
+                .cookie("JSESSIONID", 쿠키)
+                .body(createOrderRequest(랜덤사진_주문, 겨울사진_주문))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().post("/api/v1/orders")
+                .then().log().all().extract();
 
         // then
         주문_생성요청_됨(response, 박병길.getId());
     }
 
-    @DisplayName("주문 목록을 조회한다")
-    @Test
-    void getAll() {
-        // given
-        String 쿠키 = 로그인_되어_있음(이메일, 비밀번호);
-        주문_생성되어_있음(쿠키, 랜덤사진_주문, 겨울사진_주문, 가을사진_주문);
-        주문_생성되어_있음(쿠키, 랜덤사진_주문, 겨울사진_주문);
-
-        // when
-        ExtractableResponse<Response> response = 주문_조회_요청(쿠키);
-
-        // then
-        주문_조회_됨(response);
-    }
 }

@@ -1,0 +1,12 @@
+[[path]]
+== 주문
+
+=== 주문 생성
+
+==== Request
+
+include::{snippets}/order/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/order/http-response.adoc[]
