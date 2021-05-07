@@ -6,7 +6,6 @@ import com.bgpark.photoshop.domain.user.dto.UserResponse;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -62,10 +61,6 @@ public class UserStep {
                 .then().log().all().extract();
     }
 
-    public static UserResponse 사용자_생성되어_었음(UserRequest request) {
-        return 사용자_생성_요청(request).as(UserResponse.class);
-    }
-
     public static UserResponse 사용자_생성되어_있음(UserRequest request) {
         return 사용자_생성_요청(request).as(UserResponse.class);
     }
@@ -82,7 +77,7 @@ public class UserStep {
         assertThat(response.as(UserResponse.class).getEmail()).isEqualTo("bgpark82@gmail.com");
         assertThat(response.as(UserResponse.class).getName()).isEqualTo("박병길");
     }
-    public static void 사용자_생성_이메일_오류발생_됨(ExtractableResponse<Response> response, String message) {
+    public static void 사용자_생성_오류발생_됨(ExtractableResponse<Response> response, String message) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(response.body().jsonPath().getString("errors[0].defaultMessage")).isEqualTo(message);
     }

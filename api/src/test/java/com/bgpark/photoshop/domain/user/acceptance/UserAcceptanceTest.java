@@ -55,7 +55,7 @@ public class UserAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 사용자_생성_요청(사용자);
 
         // then
-        사용자_생성_이메일_오류발생_됨(response, "이메일 주소가 유효하지 않습니다.");
+        사용자_생성_오류발생_됨(response, "이메일 주소가 유효하지 않습니다.");
     }
 
     @DisplayName("사용자를 빈 이메일로 생성한다")
@@ -68,7 +68,20 @@ public class UserAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> response = 사용자_생성_요청(사용자);
 
         // then
-        사용자_생성_이메일_오류발생_됨(response, "이메일을 입력해주세요.");
+        사용자_생성_오류발생_됨(response, "이메일을 입력해주세요.");
+    }
+
+    @DisplayName("사용자를 빈 비밀번호로 생성한다")
+    @Test
+    void createWithEmptyPassword() {
+        // given
+        사용자 = 사용자(이름, 이메일, "", 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
+
+        // when
+        ExtractableResponse<Response> response = 사용자_생성_요청(사용자);
+
+        // then
+        사용자_생성_오류발생_됨(response, "비밀번호를 입력해주세요.");
     }
 
     @DisplayName("사용자 정보를 조회한다")
