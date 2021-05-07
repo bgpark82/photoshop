@@ -45,6 +45,19 @@ public class UserAcceptanceTest extends AcceptanceTest {
         사용자_생성_됨(response);
     }
 
+    @DisplayName("사용자를 유효하지 않은 이메일로 생성한다")
+    @Test
+    void createWithInvalidEmail() {
+        // given
+        사용자 = 사용자(이름, "email", 비밀번호, 사용자_집주소, 사용자_회사주소, 사용자_관심분야);
+
+        // when
+        ExtractableResponse<Response> response = 사용자_생성_요청(사용자);
+
+        // then
+        사용자_생성_이메일_오류발생_됨(response);
+    }
+
     @DisplayName("사용자 정보를 조회한다")
     @Test
     void findUser() {

@@ -44,10 +44,6 @@ public class UserStep {
         return AddressRequest.create(city, street, detail, zipcode);
     }
 
-    public static UserResponse 사용자_생성되어_었음(UserRequest request) {
-        return 사용자_생성_요청(request).as(UserResponse.class);
-    }
-
     public static ExtractableResponse<Response> 사용자_생성_요청(UserRequest request) {
         return RestAssured
                 .given().log().all()
@@ -56,6 +52,18 @@ public class UserStep {
                 .when()
                 .post("/api/v1/users")
                 .then().log().all().extract();
+    }
+
+    public static ExtractableResponse<Response> 사용자_조회_요청(String cookie) {
+        return RestAssured
+                .given().log().all()
+                .cookie("JSESSIONID", cookie)
+                .when().get("/api/v1/users/me")
+                .then().log().all().extract();
+    }
+
+    public static UserResponse 사용자_생성되어_었음(UserRequest request) {
+        return 사용자_생성_요청(request).as(UserResponse.class);
     }
 
     public static UserResponse 사용자_생성되어_있음(UserRequest request) {
@@ -74,12 +82,9 @@ public class UserStep {
         assertThat(response.as(UserResponse.class).getEmail()).isEqualTo("bgpark82@gmail.com");
         assertThat(response.as(UserResponse.class).getName()).isEqualTo("박병길");
     }
-
-    public static ExtractableResponse<Response> 사용자_조회_요청(String cookie) {
-        return RestAssured
-                .given().log().all()
-                .cookie("JSESSIONID", cookie)
-                .when().get("/api/v1/users/me")
-                .then().log().all().extract();
+    public static void 사용자_생성_이메일_오류발생_됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(response.body().jsonPath().getString("errors[0].defaultMessage")).isEqualTo("이메일 주소가 유효하지 않습니다.");
     }
+
 }

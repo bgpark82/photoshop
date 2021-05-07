@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -19,7 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/users")
-    public ResponseEntity<UserResponse> save(@RequestBody UserRequest request) {
+    public ResponseEntity<UserResponse> save(@Valid @RequestBody UserRequest request) {
         UserResponse response = userService.save(request);
         return ResponseEntity
                 .created(URI.create(String.format("/user/%d",response.getId())))
