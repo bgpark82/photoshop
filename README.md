@@ -41,5 +41,11 @@ npm start
 ./gradle test
 ```
 
+## Documentation
+```
+./gradle localDocument
+```
+[intellij asciidoc plugin](https://intellij-asciidoc-plugin.ahus1.de/docs/users-guide/features/advanced/spring-rest-docs.html)
+
 ## Author
 Byeonggil Park
