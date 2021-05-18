@@ -5,18 +5,21 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "@redux-saga/core";
 import rootSaga from "../saga";
 
-const sagaMiddleware = createSagaMiddleware();
+const makeStore = () => {
+  const sagaMiddleware = createSagaMiddleware();
+  const enhancer = applyMiddleware(sagaMiddleware);
+  const middleware =
+    process.env.NODE_ENV === "production"
+      ? compose(enhancer)
+      : composeWithDevTools(enhancer);
 
-const enhancer = applyMiddleware(sagaMiddleware);
-const middleware =
-  process.env.NODE_ENV === "production"
-    ? compose(enhancer)
-    : composeWithDevTools(enhancer);
+  const store = createStore(rootReducer, middleware);
 
-const store = createStore(rootReducer, middleware);
+  sagaMiddleware.run(rootSaga);
 
-sagaMiddleware.run(rootSaga);
+  return store;
+};
 
-const wrapper = createWrapper(() => store);
+const wrapper = createWrapper(makeStore);
 
 export default wrapper;
