@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -35,6 +35,12 @@ const Create = () => {
 
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
+
+  useEffect(() => {
+    if (todos.msg == "SUCCESS") {
+      router.push("/");
+    }
+  }, [todos]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

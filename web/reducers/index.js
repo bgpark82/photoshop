@@ -12,13 +12,14 @@ const rootReducer = (state = rootState, action) => {
         ...action.payload,
       };
       break;
-    case "SUBMIT":
-      console.log(state, action);
+    case "SUBMIT_SUCCESS":
       return {
         ...state,
-        todos: action.payload,
+        todos: {
+          ...state.todos,
+          msg: "SUCCESS",
+        },
       };
-      break;
     default:
       return state;
   }
