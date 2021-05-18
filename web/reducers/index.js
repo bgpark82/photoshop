@@ -1,10 +1,13 @@
-const rootState = {};
+const rootState = {
+  todos: {},
+};
 
 const rootReducer = (state = rootState, action) => {
   switch (action.type) {
     case "SUBMIT":
       return {
-        ...action.payload,
+        ...state,
+        todos: action.payload,
       };
       break;
     default:

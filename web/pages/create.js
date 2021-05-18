@@ -14,6 +14,7 @@ import {
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { useRouter } from "next/router";
 import store from "../store/configStore";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   field: {
@@ -32,19 +33,17 @@ const Create = () => {
   const [detailsError, setDetailsError] = useState(false);
   const [category, setCategory] = useState("todos");
 
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state.todos);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setTitleError(title == "");
     setDetailsError(details == "");
 
-    store.subscribe(() => {
-      console.log(store.getState());
-    });
-
     if (title && details) {
-      console.log("check");
-      store.dispatch({
+      dispatch({
         type: "SUBMIT",
         payload: { title, details, category },
       });
