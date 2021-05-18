@@ -3,6 +3,7 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import Layout from "../components/Layout";
 import wrapper from "../store/configStore";
+import withReduxSaga from "next-redux-saga";
 
 const theme = createMuiTheme({
   palette: {
@@ -30,4 +31,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default wrapper.withRedux(MyApp);
+export default wrapper.withRedux(withReduxSaga(MyApp));

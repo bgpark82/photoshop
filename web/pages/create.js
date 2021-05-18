@@ -37,9 +37,9 @@ const Create = () => {
   const todos = useSelector((state) => state.todos);
 
   useEffect(() => {
-    if (todos.msg == "SUCCESS") {
-      router.push("/");
-    }
+    // if (todos.msg == "SUCCESS") {
+    //   router.push("/");
+    // }
   }, [todos]);
 
   const handleSubmit = (e) => {

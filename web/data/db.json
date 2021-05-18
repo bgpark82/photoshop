@@ -113,6 +113,12 @@
       "details": "1233434",
       "category": "todos",
       "id": 23
+    },
+    {
+      "title": "123123",
+      "details": "1231234244",
+      "category": "money",
+      "id": 24
     }
   ]
 }
