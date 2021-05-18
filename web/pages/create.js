@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { useRouter } from "next/router";
+import store from "../store/configStore";
 
 const useStyles = makeStyles({
   field: {
@@ -36,13 +37,23 @@ const Create = () => {
 
     setTitleError(title == "");
     setDetailsError(details == "");
-    console.log(title, details);
+
+    store.subscribe(() => {
+      console.log(store.getState());
+    });
+
     if (title && details) {
-      fetch("http://localhost:8000/notes", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({ title, details, category }),
-      }).then(() => router.push("/"));
+      console.log("check");
+      store.dispatch({
+        type: "SUBMIT",
+        payload: { title, details, category },
+      });
+
+      // fetch("http://localhost:8000/notes", {
+      //   method: "POST",
+      //   headers: { "Content-type": "application/json" },
+      //   body: JSON.stringify({ title, details, category }),
+      // }).then(() => router.push("/"));
     }
   };
 
