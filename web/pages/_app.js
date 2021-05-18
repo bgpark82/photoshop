@@ -2,8 +2,7 @@ import "../css/index.css";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import Layout from "../components/Layout";
-import store from "../store/configStore";
-import { Provider } from "react-redux";
+import wrapper from "../store/configStore";
 
 const theme = createMuiTheme({
   palette: {
@@ -21,14 +20,14 @@ const theme = createMuiTheme({
   },
 });
 
-export default function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <MuiThemeProvider theme={theme}>
-      <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </MuiThemeProvider>
   );
-}
+};
+
+export default wrapper.withRedux(MyApp);
